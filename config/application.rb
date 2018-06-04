@@ -24,7 +24,7 @@ module QnApp
                        routing_specs: false,
                        request_specs: false,
                        controller_specs: true
-      fixtures_replacement :factory_bot, dir: 'spec/factories'
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
   end
 end
