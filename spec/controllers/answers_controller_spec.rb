@@ -15,5 +15,35 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'POST #create' do
+    context 'with valid attributes' do
+
+      it 'saves the answer in database' do
+        params_hash = { answer: attributes_for(:answer), question_id: question }
+        expect { post :create, params: params_hash }.to change(question.answers, :count).by(1)
+      end
+
+      it 'redirect to show view' do
+        post :create, params: { answer: attributes_for(:answer), question_id: question }
+        expect(response).to redirect_to assigns(:question)
+      end
+
+    end
+
+    context 'with invalid attributes' do
+
+      it 'does not save the answer in database' do
+        params_hash = { answer: attributes_for(:invalid_answer), question_id: question}
+        expect { post :create, params: params_hash}.not_to change(Answer, :count)
+      end
+
+      it 're-render new view' do
+        post :create, params: { answer: attributes_for(:invalid_answer), question_id: question}
+        expect(response).to render_template :new
+      end
+
+    end
+  end
+
 
 end
