@@ -1,6 +1,7 @@
-- @questions.each do |question|
-  b
-    = question.title
-  | |
-  = question.body
-  hr
+= form_with model: @question do |form|
+  = form.label :title
+  = form.text_field :title
+  br
+  = form.label :body
+  = form.text_field :body
+  = form.submit 'Create'
