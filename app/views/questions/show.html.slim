@@ -1,2 +1,15 @@
 h3 = @question.title
 h5 = @question.body
+
+div
+  - @question.answers.each do |answer|
+    p
+      = answer.body
+
+hr
+
+= form_with model: [@question, @answer], local: true do |form|
+  = render 'shared/errors', resource: @answer
+  p= form.label :body
+  p= form.text_field :body
+  p= form.submit 'Answer the question'
