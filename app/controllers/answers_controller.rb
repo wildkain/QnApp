@@ -9,7 +9,7 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
-      redirect_to @question, notice: "Your answer successfully created."
+      redirect_to @question, notice: 'Your answer successfully created.'
     else
       render 'questions/show'
     end
@@ -19,12 +19,9 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
   end
 
-
   def destroy
     @answer = Answer.find(params[:id])
-    if current_user.author?(@answer)
-      @answer.destroy
-    end
+    @answer.destroy if current_user.author?(@answer)
     redirect_to @answer.question
   end
 
