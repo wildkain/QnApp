@@ -120,10 +120,16 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
+    let!(:authored_question) {create(:question, user: @user)}
     before { question }
-    it 'deletes question' do
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+
+
+    context  'User tries to delete authored question' do
+      it 'deletes question' do
+        expect { delete :destroy, params: { id: authored_question } }.to change(Question, :count).by(-1)
+      end
     end
+
 
     it 'redirects to index view' do
       delete :destroy, params: { id: question }
