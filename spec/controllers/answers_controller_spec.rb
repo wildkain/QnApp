@@ -38,18 +38,35 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'DELETE #destroy' do
+    sign_in_user
 
-  describe 'GET #show' do
-    let(:answer) { question.answers.create(body: "MyText", user: user) }
-    before {sign_in(user)}
-    before {get :show, params: { id: answer }}
+    let!(:answer) { create(:answer, question: question) }
+    let!(:answer_with_author) { create(:answer, question: question, user: @user) }
 
-    it 'renders show view' do
-      expect(response).to render_template :show
+    context 'Author try to delete answer' do
+      it 'destroy answer' do
+        expect { delete :destroy, params: { id: answer_with_author } }.to change(Answer, :count).by(-1)
+      end
+
+      it 'redirect to question' do
+        delete :destroy, params: { id: answer_with_author }
+
+        expect(response).to redirect_to answer_with_author.question
+      end
     end
 
-    it 'assigns requested answer to @question var' do
-      expect(assigns(:answer)).to eq answer
+    context 'Non-Author tries to delete answer' do
+      it 'not destroy answer' do
+        expect { delete :destroy, params: { id: answer} }.to_not change(Answer, :count)
       end
+
+      it 'redirect to question' do
+        delete :destroy, params: { id: answer }
+
+        expect(response).to redirect_to answer.question
+      end
+    end
   end
+
 end

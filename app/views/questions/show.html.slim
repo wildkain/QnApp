@@ -1,13 +1,13 @@
 h3 = @question.title
 h5 = @question.body
-- if !current_user.nil? && current_user.author?(@question)
+- if current_user&.author?(@question)
   = link_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: "Are you sure?"}
 
 hr
 div
   - @question.answers.each do |answer|
     = answer.body
-    - if !current_user.nil? && current_user.author?(@question) && !answer.id.nil?
+    - if current_user&.author?(@question) && answer.persisted?
       = link_to 'Delete Answer', answer_path(answer.id), method: :delete, data: { confirm: "Really want delete your answer?"}
 
 hr

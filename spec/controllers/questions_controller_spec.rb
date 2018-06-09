@@ -61,6 +61,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with valid attributes' do
       it 'saves a new question in database' do
         expect { post :create,  params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
+        expect(Question.last.user_id).to eq @user.id
       end
 
       it 'redirects to show view' do
@@ -108,8 +109,8 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with invalid attributes' do
       before { patch :update,  params: { id: question, question: {title: "New title", body: nil} } }
       it 'does not change attributes' do
-        expect(question.title).to eq "MyString"
-        expect(question.body).to eq "MyText"
+        expect(question.title).to eq question.title
+        expect(question.body).to eq question.body
       end
 
       it 're-renders edit template' do
@@ -127,6 +128,12 @@ RSpec.describe QuestionsController, type: :controller do
     context  'User tries to delete authored question' do
       it 'deletes question' do
         expect { delete :destroy, params: { id: authored_question } }.to change(Question, :count).by(-1)
+      end
+    end
+
+    context 'User tries to delete not-authored question' do
+      it 'no changes in questions count' do
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
       end
     end
 

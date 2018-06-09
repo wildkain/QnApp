@@ -26,5 +26,3 @@ feature 'User sign in', %q{
     expect(current_path).to eq new_user_session_path
   end
 end
-
-

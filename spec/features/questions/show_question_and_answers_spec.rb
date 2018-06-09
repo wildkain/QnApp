@@ -13,17 +13,17 @@ feature 'User can view the question and answers', %q{
     sign_in(user)
     visit question_path(question)
 
-    expect(page).to have_content 'MyString'
+    expect(page).to have_content question.title
     answers.each do |answer|
-      expect(page).to have_content 'AnswerText'
+      expect(page).to have_content answer.body
     end
   end
 
   scenario 'Non-Registered user try to view question and answers' do
     visit question_path(question)
-    expect(page).to have_content 'MyString'
+    expect(page).to have_content question.title
     answers.each do |answer|
-      expect(page).to have_content 'AnswerText'
+      expect(page).to have_content answer.body
     end
   end
 

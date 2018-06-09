@@ -28,8 +28,4 @@ feature 'Any non-registered user can sign up', %q{
 
     expect(page).to have_content 'Email can\'t be blank'
   end
-
-
-
-
 end
