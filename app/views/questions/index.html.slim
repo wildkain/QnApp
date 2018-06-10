@@ -1,6 +1,7 @@
-- @questions.each do |question|
-  b
-    = question.title
-  | | 
-  = question.body
-  hr
+- unless @questions.empty?
+  - @questions.each do |question|
+    p= link_to "#{question.title}", question_path(question)
+    = question.body
+    hr
+
+p= link_to 'Ask question', new_question_path

@@ -31,6 +31,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
+    sign_in_user
     before { get :new }
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
@@ -43,6 +44,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
+    sign_in_user
 
     before {get :edit, params: { id: question }}
     it 'assigns requested question to @question var' do
@@ -55,9 +57,11 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    sign_in_user
     context 'with valid attributes' do
       it 'saves a new question in database' do
         expect { post :create,  params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
+        expect(Question.last.user_id).to eq @user.id
       end
 
       it 'redirects to show view' do
@@ -80,6 +84,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
+    sign_in_user
     context 'with valid attributes' do
 
       it 'assigns requested question to @question var' do
@@ -104,8 +109,8 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with invalid attributes' do
       before { patch :update,  params: { id: question, question: {title: "New title", body: nil} } }
       it 'does not change attributes' do
-        expect(question.title).to eq "MyString"
-        expect(question.body).to eq "MyText"
+        expect(question.title).to eq question.title
+        expect(question.body).to eq question.body
       end
 
       it 're-renders edit template' do
@@ -115,10 +120,23 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
+    sign_in_user
+    let!(:authored_question) {create(:question, user: @user)}
     before { question }
-    it 'deletes question' do
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+
+
+    context  'User tries to delete authored question' do
+      it 'deletes question' do
+        expect { delete :destroy, params: { id: authored_question } }.to change(Question, :count).by(-1)
+      end
     end
+
+    context 'User tries to delete not-authored question' do
+      it 'no changes in questions count' do
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+      end
+    end
+
 
     it 'redirects to index view' do
       delete :destroy, params: { id: question }

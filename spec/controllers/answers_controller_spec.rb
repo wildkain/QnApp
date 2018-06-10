@@ -1,63 +1,72 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create :question }
-
-  describe 'GET #new' do
-    before { get :new, params: { question_id: question } }
-
-    it 'assigns a new answer to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
-    it 'renders new view' do
-      expect(response).to render_template :new
-    end
-  end
+  let(:user) { create :user}
+  let(:question) { create(:question) }
 
   describe 'POST #create' do
-    context 'with valid attributes' do
+    sign_in_user
+    let(:params) { { answer: attributes_for(:answer), question_id: question }}
 
-      it 'saves the answer in database' do
-        params_hash = { answer: attributes_for(:answer), question_id: question }
-        expect { post :create, params: params_hash }.to change(question.answers, :count).by(1)
+    context 'with valid attributes' do
+      it 'saves new answer in database' do
+        expect { post :create, params: params }.to change(question.answers, :count).by(1)
       end
 
-      it 'redirect to show view' do
-        post :create, params: { answer: attributes_for(:answer), question_id: question }
+      it 'the answer belongs to user' do
+        expect { post :create, params: params }.to change(@user.answers, :count).by(1)
+      end
+
+      it 'redirects to show view' do
+        post :create, params: params
         expect(response).to redirect_to assigns(:question)
       end
-
     end
 
-    context 'with invalid attributes' do
-
+    context 'Signed_in user save answer with invalid attributes' do
       it 'does not save the answer in database' do
+        sign_in(user)
         params_hash = { answer: attributes_for(:invalid_answer), question_id: question}
         expect { post :create, params: params_hash}.not_to change(Answer, :count)
       end
 
       it 're-render new view' do
+        sign_in(user)
         post :create, params: { answer: attributes_for(:invalid_answer), question_id: question}
-        expect(response).to render_template :new
+        expect(response).to render_template 'questions/show'
       end
-
     end
   end
 
+  describe 'DELETE #destroy' do
+    sign_in_user
 
-  describe 'GET #show' do
-    let(:answer) { question.answers.create(body: "MyText") }
-    before {get :show, params: { id: answer }}
+    let!(:answer) { create(:answer, question: question) }
+    let!(:answer_with_author) { create(:answer, question: question, user: @user) }
 
-    it 'renders show view' do
-      expect(response).to render_template :show
+    context 'Author try to delete answer' do
+      it 'destroy answer' do
+        expect { delete :destroy, params: { id: answer_with_author } }.to change(Answer, :count).by(-1)
+      end
+
+      it 'redirect to question' do
+        delete :destroy, params: { id: answer_with_author }
+
+        expect(response).to redirect_to answer_with_author.question
+      end
     end
 
-    it 'assigns requested answer to @question var' do
-      expect(assigns(:answer)).to eq answer
+    context 'Non-Author tries to delete answer' do
+      it 'not destroy answer' do
+        expect { delete :destroy, params: { id: answer} }.to_not change(Answer, :count)
       end
-  end
 
+      it 'redirect to question' do
+        delete :destroy, params: { id: answer }
+
+        expect(response).to redirect_to answer.question
+      end
+    end
+  end
 
 end
