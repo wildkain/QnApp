@@ -14,23 +14,23 @@ RSpec.describe User, type: :model do
 
 
   context 'Check #author? for question' do
-    it 'return true if user author of question' do
-      expect(user.author?(question)).to eq true
+    it 'author of question must be author ' do
+      expect(user).to be_author(question)
     end
 
-    it 'return false if user not author' do
-      expect(not_author_user.author?(question)).to eq false
+    it 'non-author must not be author of question' do
+      expect(not_author_user).to_not be_author(question)
     end
 
   end
 
   context 'Check author of answer' do
-    it 'return true if user author of answer' do
-      expect(user.author?(answer)).to eq true
+    it 'author of answer must be author ' do
+      expect(user).to be_author(answer)
     end
 
-    it 'return false if user not author' do
-      expect(not_author_user.author?(answer)).to eq false
+    it 'non-author must not be author of answer' do
+      expect(not_author_user).to_not be_author(answer)
     end
   end
 end
