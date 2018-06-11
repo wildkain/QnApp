@@ -38,6 +38,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 #UI
 gem 'slim'
+gem 'jquery-rails'
 
 gem 'devise'
 
@@ -68,6 +69,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
   gem 'launchy'
+  gem 'geckodriver-helper'
+  gem 'database_cleaner'
 
 end
 

@@ -6,7 +6,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'POST #create' do
     sign_in_user
-    let(:params) { { answer: attributes_for(:answer), question_id: question }}
+    let(:params) { { answer: attributes_for(:answer), question_id: question, format: :js }}
 
     context 'with valid attributes' do
       it 'saves new answer in database' do
@@ -17,23 +17,23 @@ RSpec.describe AnswersController, type: :controller do
         expect { post :create, params: params }.to change(@user.answers, :count).by(1)
       end
 
-      it 'redirects to show view' do
+      it 'render create template' do
         post :create, params: params
-        expect(response).to redirect_to assigns(:question)
+        expect(response).to render_template :create
       end
     end
 
     context 'Signed_in user save answer with invalid attributes' do
       it 'does not save the answer in database' do
         sign_in(user)
-        params_hash = { answer: attributes_for(:invalid_answer), question_id: question}
+        params_hash = { answer: attributes_for(:invalid_answer), question_id: question, format: :js }
         expect { post :create, params: params_hash}.not_to change(Answer, :count)
       end
 
       it 're-render new view' do
         sign_in(user)
-        post :create, params: { answer: attributes_for(:invalid_answer), question_id: question}
-        expect(response).to render_template 'questions/show'
+        post :create, params: { answer: attributes_for(:invalid_answer), question_id: question, format: :js}
+        expect(response).to render_template :create
       end
     end
   end
