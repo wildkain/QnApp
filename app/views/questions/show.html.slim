@@ -4,16 +4,14 @@ h5 = @question.body
   = link_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: "Are you sure?"}
 
 hr
-div
-  - @question.answers.each do |answer|
-    = answer.body
-    - if current_user&.author?(@question) && answer.persisted?
-      = link_to 'Delete Answer', answer_path(answer.id), method: :delete, data: { confirm: "Really want delete your answer?"}
+
+.answers
+  = render @question.answers
 
 hr
 
-= form_with model: [@question, @answer], local: true do |form|
+= form_with model: [@question, @answer], remote: true do |form|
   = render 'shared/errors', resource: @answer
-  p= form.label :body
+  p= form.label :body, 'Your answer'
   p= form.text_field :body
   p= form.submit 'Answer the question'

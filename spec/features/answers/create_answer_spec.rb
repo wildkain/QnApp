@@ -9,16 +9,20 @@ feature 'Any registered user can create question\s answer from question show', %
   given(:user) { create(:user) }
   given(:question) {create(:question)}
 
-  scenario 'Registered user try to answer the question' do
+  scenario 'Authenticated user create answer', js: true do
     sign_in(user)
     visit question_path(question)
-    fill_in 'Body', with: "Testanswer"
-    click_button 'Answer the question'
 
-    expect(page).to have_content 'Testanswer'
+    fill_in 'Your answer', with: 'My answer'
+    click_on 'Answer the question'
+
+    expect(current_path).to eq question_path(question)
+    within '.answers' do
+      expect(page).to have_content 'My answer'
+    end
   end
 
-  scenario 'Registered user try to create answer with empty body' do
+  scenario 'Registered user try to create answer with empty body', js: true do
     sign_in(user)
     visit question_path(question)
     click_button 'Answer the question'
