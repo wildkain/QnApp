@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Any non-registered user can sign up', %q{
   In order to sign up

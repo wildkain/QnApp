@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper.rb'
 
 feature 'User can delete own answer', %q{
   In order to delete answer

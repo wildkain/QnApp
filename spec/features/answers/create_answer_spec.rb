@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper.rb'
 
 feature 'Any registered user can create question\s answer from question show', %q{
   In order to create question answer
