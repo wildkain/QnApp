@@ -1,0 +1,9 @@
+$('#error').remove();
+<% if @answer.errors.any? %>
+  <% @answer.errors.full_messages.each do |message| %>
+    $('.answers').append('<div id="error"><%= j message %></div>');
+  <% end %>
+<% else %>
+  $('form#edit-answer-'+<%= @answer.id %>).hide();
+  $('#answer-'+<%= @answer.id %>).children('p').html('<%= j render @answer %>');
+<% end %>
