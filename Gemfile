@@ -39,6 +39,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 #UI
 gem 'slim'
 gem 'jquery-rails'
+gem 'bootstrap'
 
 gem 'devise'
 
