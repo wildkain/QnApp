@@ -1,6 +1,15 @@
-- if user_signed_in?
-  = current_user.email
-  =< link_to t('links.navbar.logout'), destroy_user_session_path, method: :delete
-- else
-  =< link_to t('links.navbar.login'), new_user_session_path
-  =< link_to 'SignUp', new_user_registration_path
+.container-fluid.navbar-menu
+  nav.navbar.navbar-expand-lg.navbar-light.bg-light
+    .col-md-10
+      .ul.navbar-nav.mr-auto
+        li class="nav-item"
+          = link_to "HOME", root_path, class: "nav-link"
+        li class="nav-item"
+          = link_to "Questions", questions_path, class: "nav-link"
+    .col-md-2.justify-content-center
+      - if user_signed_in?
+        = current_user.email
+        =< link_to t('links.navbar.logout'), destroy_user_session_path, method: :delete, class: "nav-link"
+      - else
+        =< link_to t('links.navbar.login'), new_user_session_path
+        =< link_to 'SignUp', new_user_registration_path

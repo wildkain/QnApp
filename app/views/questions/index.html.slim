@@ -1,7 +1,11 @@
 - unless @questions.empty?
   - @questions.each do |question|
-    p= link_to "#{question.title}", question_path(question)
-    = question.body
-    hr
+    .card.bg-default
+      .h5.card-header
+        = link_to "#{question.title}", question_path(question)
+      .card-body
+        p.card-text
+          = question.body
+
 
 p= link_to 'Ask question', new_question_path

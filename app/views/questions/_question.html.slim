@@ -1,4 +1,4 @@
-p = question.title
+h2= question.title
 p = question.body
 - if current_user&.author?(@question)
   = link_to 'Delete question', question_path, method: :Delete
