@@ -1,8 +1,4 @@
-h3 = @question.title
-h5 = @question.body
-- if current_user&.author?(@question)
-  = link_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: "Are you sure?"},
-          class: 'btn btn-danger'
+= render @question
 
 hr
 
@@ -12,8 +8,8 @@ hr
 hr
 
 = form_with model: [@question, @answer], remote: true do |form|
-  = render 'shared/errors', resource: @answer
-  .form-group
-    = form.label :body, 'Your answer'
-    = form.text_field :body, class: 'form-control'
-  p= form.submit 'Answer the question', class: 'btn btn-primary'
+    = render 'shared/errors', resource: @answer
+    .form-group
+      = form.label :body, 'Your answer'
+      = form.text_field :body, class: 'form-control'
+    p= form.submit 'Answer the question', class: 'btn btn-primary'

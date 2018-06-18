@@ -71,9 +71,10 @@ RSpec.describe AnswersController, type: :controller do
 
 
   describe 'PATCH #update' do
-    let(:answer) { create(:answer, question: question)}
+    sign_in_user
+    let!(:answer) { create(:answer, question: question)}
     it 'assigns requested answer to @answer var' do
-      patch :update,  params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+      patch :update,  params: { id: answer, question_id: question, user: user, answer: attributes_for(:answer), format: :js }
       expect(assigns(:answer)).to eq answer
     end
 
@@ -88,8 +89,6 @@ RSpec.describe AnswersController, type: :controller do
 
       expect(answer.body).to eq "New body"
     end
-
-
 
     it 'render update template' do
       patch :update,  params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }

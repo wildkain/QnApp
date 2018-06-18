@@ -20,7 +20,7 @@ feature 'User sign in', %q{
     visit new_user_session_path
     fill_in 'Email', with: 'use12312r@tes.ocm'
     fill_in 'Password', with: '123456'
-    click_on 'Log in'
+    click_on 'Signin'
 
     expect(page).to have_content 'Invalid Email or password.'
     expect(current_path).to eq new_user_session_path

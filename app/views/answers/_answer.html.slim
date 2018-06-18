@@ -1,17 +1,18 @@
-.row.answer-block.mt-4 id="answer-#{answer.id}"
+.row.answer-block id="answer-#{answer.id}"
   .col-md-10
-    = answer.body
+    p = answer.body
   .col-md-2 id="actions"
     - if current_user&.author?(answer) && answer.persisted?
-      p= link_to 'Delete answer', answer, remote: true, method: :delete, class: 'delete-answer-link', data: { answer_id: answer.id }
-    - if user_signed_in? && answer.persisted?
-      p= link_to 'Edit',  class: "edit-answer-link", data: { answer_id: answer.id }
+      = link_to 'Delete answer', answer, remote: true, method: :delete, class: 'delete-answer-link', data: { answer_id: answer.id }
+      = link_to 'Edit', '', class: "edit-answer-link btn btn-primary", data: { answer_id: answer.id }
 
-        div id="update-answer-form"
-        - if user_signed_in? && answer.persisted?
-          p = form_for answer, class: "edit_answer", remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
-            = f.label :body, 'Answer'
-            = f.text_area :body
-            = f.submit 'Save'
+  div id="update-answer-form"
+    - if user_signed_in? && answer.persisted?
+      = form_for answer, class: "edit_answer btn btn-danger", remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+        .form-group
+          = f.label :body, 'Answer'
+          = f.text_area :body, class: 'form-control'
+        .form-group
+          = f.submit 'Save', class: 'btn btn-primary'
 
 

@@ -7,9 +7,10 @@ feature 'Answer editing', %q{
 } do
 
   given(:user) { create(:user) }
+  given(:another_user) {create(:user)}
   given!(:question) {create(:question)}
   given!(:answer) { create(:answer, question: question)}
-
+  given!(:authored_answer) {create(:answer, question: question, user: user)}
   scenario 'Unauthenticated user try to edit answer' do
     visit question_path(question)
 
@@ -22,14 +23,16 @@ feature 'Answer editing', %q{
       sign_in(user)
       visit question_path(question)
     end
+
   scenario 'Author try to find Edit link' do
-    save_and_open_page
     within '.answers' do
       expect(page).to have_link 'Edit'
     end
   end
 
-  scenario 'Author try to edit his answer',  js: true do
+
+  scenario 'Author try to edit his answer' do
+
     click_on 'Edit'
     within '.answers' do
       fill_in 'Answer', with: 'edited answer'
@@ -40,15 +43,18 @@ feature 'Answer editing', %q{
       expect(page).to_not have_selector 'textarea'
     end
   end
-  scenario 'Authenticated user(but not autrhor) try to edit answer'
-    given(:another_user) {create(:user)}
-    given!(:question) { create(:question)}
-    given!(:authored_answer) {create(:answer, question: question, user: user)}
-    sign_in(another_user)
-    visit question_path(question)
-    click_on 'Edit'
 
-    expect(page).to_not have_selector 'textarea'
+end
+
+  scenario 'Authenticated user(but not author) try to edit answer' do
+
+  sign_in(another_user)
+  visit question_path(question)
+
+  within '.answers' do
+    expect(page).to have_no_link 'Edit'
+  end
 
   end
+
 end
