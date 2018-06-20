@@ -21,18 +21,19 @@ feature 'User can update question', %q{
 
     expect(page).to have_content "Edit Question"
     expect(page).to have_content 'Authored title edited'
-
   end
 
   scenario 'Another user(not author) try to edit question' do
-
     sign_in(not_author)
     visit question_path(question)
-
 
     expect(page).to_not have_content "Edit Question"
     end
 
-  scenario 'Not-logged_in user try to edit question'
+  scenario 'Not-logged_in user try to edit question' do
+    visit question_path(question)
+
+    expect(page).to_not have_content "Edit Question"
+  end
 
 end

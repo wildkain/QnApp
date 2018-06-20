@@ -5,5 +5,5 @@ $('#error').remove();
   <% end %>
 <% else %>
   $('form#edit-answer-'+<%= @answer.id %>).hide();
-  $('#answer-'+<%= @answer.id %>).children('p').html('<%= j render @answer %>');
+  $('#answer-'+<%= @answer.id %>).replaceWith('<%= j (render @answer) %>');
 <% end %>

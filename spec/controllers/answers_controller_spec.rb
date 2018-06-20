@@ -74,12 +74,14 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
     let!(:answer) { create(:answer, question: question)}
     it 'assigns requested answer to @answer var' do
-      patch :update,  params: { id: answer, question_id: question, user: user, answer: attributes_for(:answer), format: :js }
+      patch :update,  params: { id: answer, question_id: question,
+                                    user: user, answer: attributes_for(:answer), format: :js }
       expect(assigns(:answer)).to eq answer
     end
 
     it 'assigns question to @question var' do
-      patch :update,  params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+      patch :update,  params: { id: answer, question_id: question,
+                                    answer: attributes_for(:answer), format: :js }
       expect(assigns(:question)).to eq question
     end
 
@@ -91,9 +93,40 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     it 'render update template' do
-      patch :update,  params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+      patch :update,  params: { id: answer, question_id: question,
+                                    answer: attributes_for(:answer), format: :js }
       expect(response).to render_template :update
     end
   end
 
+  describe 'PATCH #best'  do
+    sign_in_user
+    let(:authored_question) { create(:question, user: @user)}
+    let!(:not_authored_question_answer) { create(:answer, question: question)}
+    let!(:answer) { create(:answer, question: authored_question)}
+
+    context 'Author set best answer' do
+      it 'assign best attr to answer' do
+        patch :best,  params: { id: answer, format: :js }
+
+        expect(assigns(:answer)).to be_best
+      end
+
+      it 'renders best template' do
+        patch :best, params: { id: answer, format: :js }
+
+        expect(response).to render_template :best
+      end
+    end
+
+    context 'Not-Author try to set best answer' do
+
+      it 'does not set best answer' do
+        patch :best,  params: { id: not_authored_question_answer, format: :js }
+
+        expect(not_authored_question_answer.best).to eq false
+      end
+
+    end
+  end
 end

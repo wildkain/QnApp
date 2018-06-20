@@ -15,7 +15,6 @@ feature 'User can delete own answer', %q{
   scenario 'Author can delete  own answer' do
     sign_in(user)
     visit question_path(question)
-
     click_on 'Delete Answer'
 
     expect(page).to_not have_content(answer.body)

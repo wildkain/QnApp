@@ -3,6 +3,7 @@ FactoryBot.define do
     sequence(:body) { |n| "AnswerBody #{n}" }
     question
     user
+    best false
   end
 
   factory :invalid_answer, class: "Answer" do
