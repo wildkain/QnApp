@@ -21,7 +21,7 @@ RSpec.describe Answer, type: :model do
       another_answer.reload
       best_answer.reload
 
-      expect(best_answer.best).to_not be_best
+      expect(best_answer).to_not be_best
     end
   end
 
