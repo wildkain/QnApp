@@ -65,31 +65,46 @@ RSpec.describe AnswersController, type: :controller do
 
 
   describe 'PATCH #update' do
+
     sign_in_user
-    let!(:answer) { create(:answer, question: question)}
-    it 'assigns requested answer to @answer var' do
-      patch :update,  params: { id: answer, question_id: question,
-                                    user: user, answer: attributes_for(:answer), format: :js }
-      expect(assigns(:answer)).to eq answer
+    let!(:answer) { create(:answer, question: question) }
+    let!(:authored_answer) { create(:answer, question: question, user: @user) }
+
+    context 'Author try to update answer' do
+      it 'assigns requested answer to @answer var' do
+        patch :update,  params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'assigns question to @question var' do
+        patch :update,  params: { id: answer, question_id: question,
+                                      answer: attributes_for(:answer), format: :js }
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes answer attributes' do
+        patch :update,  params: { id: authored_answer, question_id: question, answer: {body: "New body"}, format: :js }
+        authored_answer.reload
+
+        expect(authored_answer.body).to eq "New body"
+      end
+
+      it 'render update template' do
+        patch :update,  params: { id: answer, question_id: question,
+                                      answer: attributes_for(:answer), format: :js }
+        expect(response).to render_template :update
+      end
     end
 
-    it 'assigns question to @question var' do
-      patch :update,  params: { id: answer, question_id: question,
-                                    answer: attributes_for(:answer), format: :js }
-      expect(assigns(:question)).to eq question
-    end
+    context 'Not-Author try to update answer' do
 
-    it 'changes answer attributes' do
-      patch :update,  params: { id: answer, question_id: question, answer: {body: "New body"}, format: :js }
-      answer.reload
+      it 'Not change answer attrs' do
+        patch :update,  params: { id: answer, question_id: question, answer: {body: "New body"}, format: :js }
 
-      expect(answer.body).to eq "New body"
-    end
+        expect(answer.body).to_not eq "New body"
+      end
 
-    it 'render update template' do
-      patch :update,  params: { id: answer, question_id: question,
-                                    answer: attributes_for(:answer), format: :js }
-      expect(response).to render_template :update
     end
   end
 

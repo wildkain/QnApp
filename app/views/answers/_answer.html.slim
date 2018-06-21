@@ -1,10 +1,7 @@
 .row.answer-block id="answer-#{answer.id}"
-  - if answer&.best?
-    .col-md-10.mt-4.best-answer
-      p = answer.body
-  - else
-    .col-md-10.mt-4
-      p = answer.body
+
+  div class="col-md-10 mt-4 #{ "best-answer" if answer&.best? }"
+    p = answer.body
 
   .col-md-2.mt-4 id="actions"
     - if answer.persisted? && current_user&.author?(answer.question)

@@ -16,7 +16,7 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer.update(answer_params)
+    @answer.update(answer_params) if current_user.author?(@answer)
     @question = @answer.question
   end
 
@@ -27,7 +27,7 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:body, :best)
+    params.require(:answer).permit(:body)
   end
 
   def find_answer
