@@ -3,6 +3,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_question, only: %i[new create]
+  before_action :find_answer, only: %i[destroy update best]
 
   def create
     @answer = @question.answers.new(answer_params)
@@ -11,15 +12,26 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer = Answer.find(params[:id])
     @answer.destroy if current_user.author?(@answer)
-    redirect_to @answer.question
+  end
+
+  def update
+    @answer.update(answer_params) if current_user.author?(@answer)
+    @question = @answer.question
+  end
+
+  def best
+    @answer.best! if current_user.author?(@answer.question)
   end
 
   private
 
   def answer_params
     params.require(:answer).permit(:body)
+  end
+
+  def find_answer
+    @answer = Answer.find(params[:id])
   end
 
   def find_question

@@ -1,3 +1,23 @@
-p = answer.body
-- if current_user&.author?(answer)
-  = link_to 'Delete Answer', answer.question, method: :delete, data: { confirm: 'Are you sure?' }
+.row.answer-block id="answer-#{answer.id}"
+
+  div class="col-md-10 mt-4 #{ "best-answer" if answer&.best? }"
+    p = answer.body
+
+  .col-md-2.mt-4 id="actions"
+    - if answer.persisted? && current_user&.author?(answer.question)
+      = link_to 'Best Answer', best_answer_path(answer), class: 'btn btn-success',  remote: true, method: :patch
+    - if current_user&.author?(answer) && answer.persisted?
+      = link_to 'Edit Answer', '', class: 'edit-answer-link btn btn-primary', data: { answer_id: answer.id }
+      = link_to 'Delete Answer', answer, remote: true, method: :delete, class: 'delete-answer-link btn btn-danger', data: { answer_id: answer.id }
+
+
+  div id="update-answer-form"
+    - if user_signed_in? && answer.persisted?
+      = form_for answer, class: "edit_answer btn btn-danger", remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+        .form-group
+          = f.label :body, 'Answer'
+          = f.text_area :body, class: 'form-control'
+        .form-group
+          = f.submit 'Save', class: 'btn btn-primary'
+
+

@@ -1,0 +1,9 @@
+$('#error').remove();
+<% if @question.errors.any? %>
+<% @question.errors.full_messages.each do |message| %>
+$('.edit-question-form').append('<div id="error"><%= j message %></div>');
+<% end %>
+<% else %>
+$('.edit-question-form').hide();
+$('.question-block').html('<%= j render @question %>');
+<% end %>

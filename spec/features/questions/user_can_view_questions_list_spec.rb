@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper.rb'
 
 feature 'User can view questions list', %q{
   In order to view questions list

@@ -91,38 +91,46 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
-    context 'with valid attributes' do
+    let!(:authored_question) { create(:question, user: @user)}
+    context 'Author with valid attributes' do
 
       it 'assigns requested question to @question var' do
-        patch :update,  params: { id: question, question: attributes_for(:question) }
+        patch :update,  params: { id: question, question: attributes_for(:question), format: :js }
         expect(assigns(:question)).to eq question
       end
 
       it 'changes question attributes' do
-        patch :update,  params: { id: question, question: {title: "New title", body: "New body"} }
-        question.reload
-        expect(question.title).to eq "New title"
-        expect(question.body).to eq "New body"
+        patch :update,  params: { id: authored_question, question: {title: "New title", body: "New body", user: @user }, format: :js }
+        authored_question.reload
+        expect(authored_question.title).to eq "New title"
+        expect(authored_question.body).to eq "New body"
       end
 
       it 'redirect to updated question' do
-        patch :update,  params: { id: question, question: attributes_for(:question) }
+        patch :update,  params: { id: question, question: attributes_for(:question), format: :js }
         expect(response).to redirect_to question
       end
 
     end
 
+    context 'Not-athored user with valid attrs' do
+
+        it 'does not change attrs' do
+          patch :update,  params: { id: question,
+                                    question: {title: "New title", body: "New body" },
+                                    format: :js }
+          expect(question.title).to_not eq "New title"
+          expect(question.body).to_not eq "New body"
+        end
+    end
+
     context 'with invalid attributes' do
-      before { patch :update,  params: { id: question, question: {title: "New title", body: nil} } }
+      before { patch :update,  params: { id: question, question: {title: "New title", body: nil}, format: :js } }
       it 'does not change attributes' do
         expect(question.title).to eq question.title
         expect(question.body).to eq question.body
       end
-
-      it 're-renders edit template' do
-        expect(response).to render_template :edit
-      end
-    end
+     end
   end
 
   describe 'DELETE #destroy' do

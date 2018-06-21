@@ -5,5 +5,5 @@ $('.answers').append('<div id="error"><%= j message %></div>');
 <% end %>
 <% else %>
 $('.answers').append('<%= j render @answer %>');
-$('#answer_body').val('');
+$('input#answer_body').val("");
 <% end %>
