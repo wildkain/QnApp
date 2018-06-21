@@ -19,7 +19,7 @@ feature 'Add files to question', %q{
     attach_file 'File', "#{Rails.root}/spec/test_file.txt"
     click_on 'Create'
 
-    expect(page).to have_content 'test_file.txt'
+    expect(page).to have_link 'test_file.txt', href: '/uploads/attachment/file/1/test_file.txt'
 
   end
 
