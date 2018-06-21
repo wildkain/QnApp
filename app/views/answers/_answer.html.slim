@@ -2,6 +2,9 @@
 
   div class="col-md-10 mt-4 #{ "best-answer" if answer&.best? }"
     p = answer.body
+    ul
+      - answer.attachments.each do |a|
+        li = link_to a.file.identifier, a.file.url
 
   .col-md-2.mt-4 id="actions"
     - if answer.persisted? && current_user&.author?(answer.question)

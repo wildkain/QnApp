@@ -12,4 +12,9 @@ hr
     .form-group
       = form.label :body, 'Your answer'
       = form.text_field :body, class: 'form-control'
-    p= form.submit 'Answer the question', class: 'btn btn-primary'
+    .form-group
+      = form.fields_for :attachments do |a|
+        = a.label :file
+        = a.file_field :file, class: 'form-control-file'
+    .form-group
+      = form.submit 'Answer the question', class: 'btn btn-primary'
