@@ -1,6 +1,10 @@
 .question-block
   h3 = @question.title
   h5 = @question.body
+  p Attachments:
+  ul
+    - @question.attachments.each do |a|
+      li= a.file.file.filename
   - if current_user&.author?(@question)
     = link_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: "Are you sure?"},
             class: 'btn btn-danger'

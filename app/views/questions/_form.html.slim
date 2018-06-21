@@ -7,4 +7,10 @@
     = form.label :body
     = form.text_area :body, class: 'form-control'
   .form-group
+    p Attachments:
+    p= form.fields_for :attachments do |field|
+      = field.label :file
+      = field.file_field :file
+
+  .form-group
     = form.submit 'Create', class: 'btn btn-primary'
