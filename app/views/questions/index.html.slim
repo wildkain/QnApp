@@ -1,3 +1,5 @@
+.row.justify-content-right
+  p= link_to 'Ask question', new_question_path, class: 'btn btn-primary'
 - unless @questions.empty?
   - @questions.each do |question|
     .card.bg-default
@@ -8,4 +10,3 @@
           = question.body
 
 
-p= link_to 'Ask question', new_question_path

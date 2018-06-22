@@ -7,7 +7,7 @@ feature 'Add files to answer', %q{
 }do
 
   given(:user) { create :user}
-  given(:question) { create :question }
+  given(:question) { create :question  }
 
   background do
     sign_in(user)
@@ -19,7 +19,7 @@ feature 'Add files to answer', %q{
     fill_in 'Your answer', with: 'Test BODY Answer'
     attach_file 'File', "#{Rails.root}/spec/test_file.txt"
     click_on 'Answer the question'
-
+    sleep(2)
     within '.answers' do
       expect(page).to have_link 'test_file.txt', href: '/uploads/attachment/file/1/test_file.txt'
     end
