@@ -1,13 +1,7 @@
 .question-block
   h3 = @question.title
   h5 = @question.body
-  p Attachments:
-  .attachments id="#{question.id}"
-    ul
-      - @question.attachments.each do |a|
-        li id="attachment-#{a.id}"
-          = link_to a.file.identifier, a.file.url
-          p= link_to "Delete File", a, remote: true, method: :delete if current_user&.author?(@question)
+  = render 'shared/attachments', resource: @question unless @question.attachments.empty?
   - if current_user&.author?(@question)
     = link_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: "Are you sure?"},
             class: 'btn btn-danger'

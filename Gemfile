@@ -39,6 +39,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 #Attachments
 gem 'carrierwave'
 gem 'remotipart'
+gem 'cocoon'
 
 #UI
 gem 'slim'

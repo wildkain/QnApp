@@ -23,6 +23,23 @@ feature 'Add files to question', %q{
 
   end
 
+  scenario 'User add  more then one files to question on create', js: true  do
+    fill_in 'Title', with: 'Test TITLE question'
+    fill_in 'Body', with: 'Test BODY question'
+    attach_file 'File', "#{Rails.root}/spec/test_file.txt"
+    click_link 'Add file'
+
+    within page.all('.attached-fields')[1] do
+      attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
+    end
+
+    click_on 'Create'
+
+    expect(page).to have_link 'test_file.txt', href: '/uploads/attachment/file/1/test_file.txt'
+    expect(page).to have_link 'test_file2.txt', href: '/uploads/attachment/file/1/test_file2.txt'
+
+  end
+
 
 
 end
