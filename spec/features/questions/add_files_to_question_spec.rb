@@ -30,7 +30,7 @@ feature 'Add files to question', %q{
     click_link 'Add file'
 
     within page.all('.attached-fields')[1] do
-      attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
+      attach_file 'File', "#{Rails.root}/spec/test_file2.txt"
     end
 
     click_on 'Create'
