@@ -2,9 +2,12 @@
 
   div class="col-md-10 mt-4 #{ "best-answer" if answer&.best? }"
     p = answer.body
-    ul
-      - answer.attachments.each do |a|
-        li = link_to a.file.identifier, a.file.url
+    .attachments id="#{answer.id}"
+      ul
+        - answer.attachments.each do |a|
+          li id="attachment-#{a.id}"
+            = link_to a.file.identifier, a.file.url
+            = link_to 'Delete File', a, remote: true, method: :delete, data: { id: answer.id }
 
   .col-md-2.mt-4 id="actions"
     - if answer.persisted? && current_user&.author?(answer.question)
