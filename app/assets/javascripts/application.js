@@ -12,6 +12,8 @@
 //
 //= require rails-ujs
 //= require jquery
+//= require jquery.remotipart
+//= require cocoon
 //= require bootstrap
 //= require popper
 //= require bootstrap-sprockets

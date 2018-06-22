@@ -7,4 +7,10 @@
     = form.label :body
     = form.text_area :body, class: 'form-control'
   .form-group
+    p Attachments:
+    = form.fields_for :attachments do |a|
+      = render 'shared/attachments_fields_for', f: a
+  .links
+    = link_to_add_association 'Add file', form, :attachments, partial: 'shared/attachments_fields_for'
+  .form-group
     = form.submit 'Create', class: 'btn btn-primary'

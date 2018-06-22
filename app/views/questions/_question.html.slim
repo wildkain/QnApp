@@ -1,6 +1,7 @@
 .question-block
   h3 = @question.title
   h5 = @question.body
+  = render 'shared/attachments', resource: @question unless @question.attachments.empty?
   - if current_user&.author?(@question)
     = link_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: "Are you sure?"},
             class: 'btn btn-danger'
