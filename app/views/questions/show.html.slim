@@ -6,16 +6,17 @@ hr
   = render @question.answers.best_ordered
 
 hr
-
-= form_with model: [@question, @answer], remote: true do |form|
-  = render 'shared/errors', resource: @answer
-  .form-group
-    = form.label :body, 'Your answer'
-    = form.text_field :body, class: 'form-control'
-  .form-group
-    = form.fields_for :attachments do |a|
-      = render 'shared/attachments_fields_for', f: a
-  .links
-    = link_to_add_association 'Add file', form, :attachments, partial: 'shared/attachments_fields_for'
-  .form-group
-    = form.submit 'Answer the question', class: 'btn btn-primary'
+.form-block
+  .errors
+  = form_with model: [@question, @answer], class: 'new_answer', remote: true do |form|
+    = render 'shared/errors', resource: @answer
+    .form-group
+      = form.label :body, 'Your answer'
+      = form.text_field :body, class: 'form-control'
+    .form-group
+      = form.fields_for :attachments do |a|
+        = render 'shared/attachments_fields_for', f: a
+    .links
+      = link_to_add_association 'Add file', form, :attachments, partial: 'shared/attachments_fields_for'
+    .form-group
+      = form.submit 'Answer the question', class: 'btn btn-primary'
