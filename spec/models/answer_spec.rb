@@ -26,6 +26,13 @@ RSpec.describe Answer, type: :model do
     end
   end
 
+  describe '#vote!' do
+    it 'change answer rating by 1' do
+      answer.vote_up
+    end
+
+  end
+
   describe 'scope' do
     describe 'best_ordered' do
       it 'best answer first in collection' do
