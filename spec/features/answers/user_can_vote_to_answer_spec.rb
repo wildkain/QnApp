@@ -12,20 +12,38 @@ feature 'User can vote for answer', %q{
   given!(:answer) { create(:answer, question: question)}
 
 
-  scenario 'Authenticated user vote to answer', js:true do
+  scenario 'Authenticated user vote UP to answer', js:true do
     sign_in(user)
     visit question_path(question)
-    save_and_open_page
     within '.answers' do
-      click_link 'Vote UP'
+      click_link 'Vote Up'
     end
+    sleep(1)
+    answer.reload
 
-
-    expect(answer.rating).to change(answer, :rating).by(1)
-
-
+    expect(answer.sum_all).to eq 1
   end
 
-  scenario 'Not-auth user try to vote answer'
+  scenario 'Authenticated user vote DOWN to answer', js:true do
+    sign_in(user)
+    visit question_path(question)
+    within '.answers' do
+      click_link 'Vote Down'
+    end
+    sleep(1)
+    answer.reload
+
+    expect(answer.sum_all).to eq -1
+  end
+
+  scenario 'Not-auth user try to vote answer' do
+    visit question_path(question)
+    within '.answers' do
+      click_link 'Vote Up'
+    end
+
+    expect(page).to_have content "Only registered users can Vote!"
+  end
+
 
 end

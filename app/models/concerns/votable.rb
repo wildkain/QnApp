@@ -8,4 +8,10 @@ module Votable
   def vote(user, count)
     self.votes.create!( user:user, count:count )
   end
+
+
+  def sum_all
+    self.votes.sum(:count)
+  end
+
 end

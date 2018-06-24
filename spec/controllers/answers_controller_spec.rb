@@ -138,4 +138,28 @@ RSpec.describe AnswersController, type: :controller do
 
     end
   end
+
+  describe "POST #vote_count_up" do
+    sign_in_user
+    let(:authored_question) { create(:question, user: @user)}
+    let!(:answer) { create(:answer, question: authored_question)}
+
+    context 'Registered user try to vote UP' do
+      it 'should change votes count' do
+        post :vote_count_up, params: {id: answer, user: @user, count: 1, format: :js}
+        expect(answer.sum_all).to eq 1
+      end
+    end
+
+    context 'Registered user try to vote DOWN' do
+      it 'should change votes count' do
+        post :vote_count_down, params: {id: answer, user: @user, count: -1, format: :js}
+        expect(answer.sum_all).to eq -1
+      end
+    end
+
+
+  end
+
+
 end

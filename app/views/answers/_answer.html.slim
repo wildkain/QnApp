@@ -1,6 +1,11 @@
 .row.answer-block id="answer-#{answer.id}"
+  .col-md-2.mt-4
+    .vote_counter
+      = answer.sum_all
+    .vote_links
+      = render 'shared/vote_links', resource: answer
 
-  div class="col-md-10 mt-4 #{ "best-answer" if answer&.best? }"
+  div class="col-md-8 mt-4 #{ "best-answer" if answer&.best? }"
     p = answer.body
     = render 'shared/attachments', resource: answer unless answer.attachments.empty?
 
