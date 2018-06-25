@@ -7,12 +7,23 @@ module Voted
 
 
   def vote_count_up
-    @votable_obj.vote(current_user, 1)
+    if @votable_obj.already_voted?(current_user, 1)
+      render json: "You have already voted for this", status: 422
+    else
+      @votable_obj.vote(current_user, 1)
+      render json: @votable_obj.votes.sum(:count)
+    end
   end
 
   def vote_count_down
-    @votable_obj.vote(current_user, -1)
+    if @votable_obj.already_voted?(current_user, -1)
+      render json: "You have already voted for this", status: 422
+    else
+      @votable_obj.vote(current_user, -1)
+      render json: @votable_obj.votes.sum(:count)
+    end
   end
+
 
 
   private

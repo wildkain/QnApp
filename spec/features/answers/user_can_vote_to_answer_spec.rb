@@ -46,4 +46,19 @@ feature 'User can vote for answer', %q{
   end
 
 
+  scenario 'Auth user try to vote for already voted answer' do
+    sign_in(user)
+    create(:vote, :up, user: user, votable: answer)
+
+    visit question_path(question)
+
+    within '.answers' do
+      click_on 'Vote Up'
+
+      expect(page).to have_content "You have already voted for this"
+    end
+
+  end
+
+
 end
