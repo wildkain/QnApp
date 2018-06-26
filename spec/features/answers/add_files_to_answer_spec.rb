@@ -35,11 +35,11 @@ feature 'Add files to answer', %q{
       attach_file 'File', "#{Rails.root}/spec/test_file2.txt"
     end
 
-    click_on 'Create'
+    click_on 'Answer the question'
+    sleep(2)
 
     expect(page).to have_link 'test_file.txt', href: '/uploads/attachment/file/1/test_file.txt'
-    expect(page).to have_link 'test_file2.txt', href: '/uploads/attachment/file/1/test_file2.txt'
-
+    expect(page).to have_link 'test_file2.txt', href: '/uploads/attachment/file/2/test_file2.txt'
   end
 
 

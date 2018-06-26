@@ -25,10 +25,7 @@ feature 'Delete attached file from answer', %q{
 
     scenario 'Non-author answer try to delete attachment', js: true  do
       visit question_path(question)
-      within '.answers' do
-        click_link 'Delete File'
 
-        expect(answer.attachments.empty?).to eq false
-      end
+      expect(page).to_not have_link 'Delete File'
     end
 end
