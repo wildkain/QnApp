@@ -9,7 +9,9 @@ module Voted
   def vote_count_up
     if @votable_obj.already_voted?(current_user, 1)
       render json: "You have already voted for this", status: 422
-      else
+    elsif current_user.author?(@votable_obj)
+      render json: "Author can't vote", status: 422
+    else
       @votable_obj.vote(current_user, 1)
       render json: @votable_obj.votes.sum(:count)
     end
@@ -18,6 +20,8 @@ module Voted
   def vote_count_down
     if @votable_obj.already_voted?(current_user, -1)
       render json: "You have already voted for this", status: 422
+    elsif current_user.author?(@votable_obj)
+      render json: "Author can't vote", status: 422
     else
       @votable_obj.vote(current_user, -1)
       render json: @votable_obj.votes.sum(:count)
@@ -35,6 +39,5 @@ module Voted
   def find_object
     @votable_obj = model_klass.find(params[:id])
   end
-
 
 end

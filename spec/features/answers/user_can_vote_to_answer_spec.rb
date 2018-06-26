@@ -22,7 +22,6 @@ feature 'User can vote for answer', %q{
       end
       sleep(1)
       answer.reload
-
       expect(answer.sum_all).to eq 1
     end
 
@@ -49,12 +48,33 @@ feature 'User can vote for answer', %q{
 
   end
 
+  context 'Author try to vote for own answer' do
+    given(:answer) { create(:answer, question: question, user: user)}
+
+    before { sign_in(user); visit question_path(question) }
+    scenario 'Author try to VOTE UP for answer' do
+      within '.answers' do
+        click_on 'Vote Up'
+      end
+      expect(page).to have_content "Author can't vote"
+    end
+
+    scenario 'Author try to VOTE DOWN for answer' do
+      within '.answers' do
+        click_on 'Vote Up'
+      end
+
+      expect(page).to have_content "Author can't vote"
+    end
+
+  end
 
   scenario 'Not-auth user try to vote answer', js: true do
     visit question_path(question)
     within '.answers' do
       click_link 'Vote Up'
     end
+
     expect(page).to have_content "You need to sign in or sign up before continuing."
   end
 end

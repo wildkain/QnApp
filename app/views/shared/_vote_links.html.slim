@@ -2,6 +2,6 @@
 .vote_actions
   .vote
     = link_to 'Vote Up', polymorphic_path([:vote_count_up, resource]), method: :post, remote: true
-  |  |
+  |
   .vote
     = link_to 'Vote Down', polymorphic_path([:vote_count_down, resource]), method: :post, remote: true

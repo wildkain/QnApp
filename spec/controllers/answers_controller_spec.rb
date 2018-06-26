@@ -158,8 +158,35 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
+    context 'Registered user try vote twice(or more)' do
+      it 'should get 422 error' do
+        create(:vote, :up, user: @user, votable: answer )
+        post :vote_count_up, params: {id: answer, user: @user, count: 1, format: :js}
 
+        expect(response).to have_http_status 422
+      end
+    end
+
+    context 'Author try to vote own answer' do
+      let!(:authored_answer) { create(:answer, question: question, user: @user)}
+      it 'should get forbidden error' do
+
+        post :vote_count_up, params: {id: authored_answer, user: @user, count: 1, format: :js}
+
+        expect(response).to have_http_status 422
+        expect(authored_answer.sum_all).to eq 0
+      end
+    end
+
+    context "Not-logged_in user try to vote" do
+      let!(:authored_answer) { create(:answer, question: question, user: @user)}
+
+      it 'should get forbidden error' do
+        sign_out @user
+        post :vote_count_up, params: {id: authored_answer, user: nil, count: 1, format: :js}
+        expect(response).to have_http_status 401
+        expect(authored_answer.sum_all).to eq 0
+      end
+    end
   end
-
-
 end

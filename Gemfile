@@ -45,7 +45,7 @@ gem 'cocoon'
 gem 'slim'
 gem 'jquery-rails'
 gem 'bootstrap'
-
+gem 'octicons_helper'
 gem 'devise'
 
 
