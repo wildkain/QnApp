@@ -147,14 +147,14 @@ RSpec.describe AnswersController, type: :controller do
     context 'Registered user try to vote UP' do
       it 'should change votes count' do
         post :vote_count_up, params: {id: answer, user: @user, count: 1, format: :js}
-        expect(answer.sum_all).to eq 1
+        expect(answer.votes_sum).to eq 1
       end
     end
 
     context 'Registered user try to vote DOWN' do
       it 'should change votes count' do
         post :vote_count_down, params: {id: answer, user: @user, count: -1, format: :js}
-        expect(answer.sum_all).to eq -1
+        expect(answer.votes_sum).to eq -1
       end
     end
 
@@ -173,8 +173,8 @@ RSpec.describe AnswersController, type: :controller do
 
         post :vote_count_up, params: {id: authored_answer, user: @user, count: 1, format: :js}
 
-        expect(response).to have_http_status 422
-        expect(authored_answer.sum_all).to eq 0
+        expect(response).to have_http_status 403
+        expect(authored_answer.votes_sum).to eq 0
       end
     end
 
@@ -185,7 +185,7 @@ RSpec.describe AnswersController, type: :controller do
         sign_out @user
         post :vote_count_up, params: {id: authored_answer, user: nil, count: 1, format: :js}
         expect(response).to have_http_status 401
-        expect(authored_answer.sum_all).to eq 0
+        expect(authored_answer.votes_sum).to eq 0
       end
     end
   end

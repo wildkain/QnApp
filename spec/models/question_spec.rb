@@ -47,4 +47,15 @@ RSpec.describe Question, type: :model do
       expect(question.already_voted?(another_user, 1)).to eq false
     end
   end
+
+  describe '#votes_sum' do
+    let!(:another_user) { create :user }
+
+    it 'return sum of all votes for question' do
+      create(:vote, :up, user: user, votable: question)
+      create(:vote, :up, user: another_user, votable: question)
+
+      expect(question.votes_sum).to eq 2
+    end
+  end
 end

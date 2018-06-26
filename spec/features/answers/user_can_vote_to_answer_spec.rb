@@ -22,7 +22,7 @@ feature 'User can vote for answer', %q{
       end
       sleep(1)
       answer.reload
-      expect(answer.sum_all).to eq 1
+      expect(answer.votes_sum).to eq 1
     end
 
     scenario 'Authenticated user vote DOWN to answer', js:true do
@@ -32,7 +32,7 @@ feature 'User can vote for answer', %q{
       sleep(1)
       answer.reload
 
-      expect(answer.sum_all).to eq -1
+      expect(answer.votes_sum).to eq -1
     end
 
     scenario 'Auth user try to vote for already voted answer', js: true do

@@ -23,7 +23,7 @@ feature 'User can vote for question', %q{
       end
       sleep(1)
       question.reload
-      expect(question.sum_all).to eq 1
+      expect(question.votes_sum).to eq 1
     end
 
     scenario 'Authenticated user vote DOWN to question', js:true do
@@ -33,7 +33,7 @@ feature 'User can vote for question', %q{
       sleep(1)
       question.reload
 
-      expect(question.sum_all).to eq -1
+      expect(question.votes_sum).to eq -1
     end
 
     scenario 'Auth user try to vote for already voted question', js: true do

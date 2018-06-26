@@ -28,6 +28,6 @@
 
         .col-md-2
           .vote_counter
-            = @question.sum_all
+            = @question.votes_sum
           .vote_links
             = render 'shared/vote_links', resource: @question

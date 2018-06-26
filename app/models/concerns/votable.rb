@@ -5,20 +5,20 @@ module Votable
     has_many :votes, as: :votable, dependent: :destroy
   end
 
-  def vote(user, count)
+  def vote(user, value)
     transaction do
       self.votes.where(user: user).destroy_all
-      self.votes.create!( user: user, count: count )
+      self.votes.create!( user: user, count: value )
     end
 
   end
 
-  def already_voted?(user, count)
-    self.votes.where(user: user, count: count).exists?
+  def already_voted?(user, value)
+    self.votes.where(user: user, count: value).exists?
   end
 
 
-  def sum_all
+  def votes_sum
     self.votes.sum(:count)
   end
 

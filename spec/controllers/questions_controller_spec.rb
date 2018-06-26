@@ -176,7 +176,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'Registered user try to vote UP' do
       it 'should change votes count' do
         post :vote_count_up, params: {id: question, user: @user, count: 1, format: :js}
-        expect(question.sum_all).to eq 1
+        expect(question.votes_sum).to eq 1
       end
     end
 
@@ -184,7 +184,7 @@ RSpec.describe QuestionsController, type: :controller do
       it 'should change votes count' do
         post :vote_count_down, params: {id: question, user: @user, count: -1, format: :js}
 
-        expect(question.sum_all).to eq -1
+        expect(question.votes_sum).to eq -1
       end
     end
 
@@ -201,8 +201,8 @@ RSpec.describe QuestionsController, type: :controller do
       it 'should get forbidden error' do
         post :vote_count_up, params: {id: authored_question, user: @user, count: 1, format: :js}
 
-        expect(response).to have_http_status 422
-        expect(question.sum_all).to eq 0
+        expect(response).to have_http_status 403
+        expect(question.votes_sum).to eq 0
       end
     end
 
@@ -212,7 +212,7 @@ RSpec.describe QuestionsController, type: :controller do
         sign_out @user
         post :vote_count_up, params: {id: authored_question, user: nil, count: 1, format: :js}
         expect(response).to have_http_status 401
-        expect(authored_question.sum_all).to eq 0
+        expect(authored_question.votes_sum).to eq 0
       end
 
     end
