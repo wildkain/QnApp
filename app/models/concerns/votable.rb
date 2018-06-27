@@ -17,7 +17,6 @@ module Votable
     self.votes.where(user: user, count: value).exists?
   end
 
-
   def votes_sum
     self.votes.sum(:count)
   end

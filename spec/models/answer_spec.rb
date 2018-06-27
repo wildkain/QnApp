@@ -79,10 +79,14 @@ RSpec.describe Answer, type: :model do
     let!(:answer) { create(:answer, user: another_user, question: question) }
 
     it 'return sum of all votes for answer' do
-      create(:vote, :up, user: user, votable: answer)
-      create(:vote, :up, user: another_user, votable: answer)
+      2.times do
+        create(:vote, :up, user: user, votable: answer)
+      end
+      3.times do
+        create(:vote, :down, user: another_user, votable: answer)
+      end
 
-      expect(answer.votes_sum).to eq 2
+      expect(answer.votes_sum).to eq(0 + 2 - 3)
     end
   end
 
