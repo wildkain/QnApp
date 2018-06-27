@@ -167,4 +167,54 @@ RSpec.describe QuestionsController, type: :controller do
 
   end
 
+  describe "POST #vote_count_up" do
+    sign_in_user
+    let(:another_user) { create :user }
+    let(:question) {create(:question, user: another_user)}
+    let(:authored_question) { create(:question, user: @user)}
+
+    context 'Registered user try to vote UP' do
+      it 'should change votes count' do
+        post :vote_count_up, params: {id: question, user: @user, count: 1, format: :js}
+        expect(question.votes_sum).to eq 1
+      end
+    end
+
+    context 'Registered user try to vote DOWN' do
+      it 'should change votes count' do
+        post :vote_count_down, params: {id: question, user: @user, count: -1, format: :js}
+
+        expect(question.votes_sum).to eq -1
+      end
+    end
+
+    context 'Registered user try vote twice(or more)' do
+      it 'should get 422 error' do
+        create(:vote, :up, user: @user, votable: question )
+        post :vote_count_up, params: {id: question, user: @user, count: 1, format: :js}
+
+        expect(response).to have_http_status 422
+      end
+    end
+
+    context 'Author try to vote own question' do
+      it 'should get forbidden error' do
+        post :vote_count_up, params: {id: authored_question, user: @user, count: 1, format: :js}
+
+        expect(response).to have_http_status 403
+        expect(question.votes_sum).to eq 0
+      end
+    end
+
+    context "Not-logged_in user try to vote" do
+
+      it 'should get forbidden error' do
+        sign_out @user
+        post :vote_count_up, params: {id: authored_question, user: nil, count: 1, format: :js}
+        expect(response).to have_http_status 401
+        expect(authored_question.votes_sum).to eq 0
+      end
+
+    end
+  end
 end

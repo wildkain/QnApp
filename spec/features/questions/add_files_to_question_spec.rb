@@ -34,9 +34,10 @@ feature 'Add files to question', %q{
     end
 
     click_on 'Create'
+    sleep(2)
 
-    expect(page).to have_link 'test_file.txt', href: '/uploads/attachment/file/1/test_file.txt'
-    expect(page).to have_link 'test_file2.txt', href: '/uploads/attachment/file/1/test_file2.txt'
+    expect(page).to have_link 'test_file.txt', href: '/uploads/attachment/file/2/test_file.txt'
+    expect(page).to have_link 'test_file2.txt', href: '/uploads/attachment/file/3/test_file2.txt'
 
   end
 

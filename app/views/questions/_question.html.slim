@@ -1,18 +1,33 @@
 .question-block
-  h3 = @question.title
-  h5 = @question.body
-  = render 'shared/attachments', resource: @question unless @question.attachments.empty?
-  - if current_user&.author?(@question)
-    = link_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: "Are you sure?"},
-            class: 'btn btn-danger'
-    = link_to 'Edit Question', '', class: "edit-question-link btn btn-primary", data: { question: @question.id }
-  .edit-question-form
-    = form_with model: @question, remote: true do |form|
-      .form-group
-        = form.label :title
-        = form.text_field :title, class: 'form-control'
-      .form-group
-        = form.label :body
-        = form.text_area :body, class: 'form-control'
-      .form-group
-        = form.submit 'Save', class: 'btn btn-primary'
+  .card.bg-default
+    .card-header
+      .row
+        .col-md-8
+          h3 = @question.title
+        .col-md-4
+          - if current_user&.author?(@question)
+            = link_to 'Edit Question', '', class: "edit-question-link btn btn-primary", data: {question: @question.id}
+            = link_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: "Are you sure?"},
+                    class: 'btn btn-danger'
+
+    .card-body
+      .row
+        .col-md-10
+          h5 = @question.body
+          = render 'shared/attachments', resource: @question unless @question.attachments.empty?
+          .edit-question-form
+            = form_with model: @question, remote: true do |form|
+              .form-group
+                = form.label :title
+                = form.text_field :title, class: 'form-control'
+              .form-group
+                = form.label :body
+                = form.text_area :body, class: 'form-control'
+              .form-group
+                = form.submit 'Save', class: 'btn btn-primary'
+
+        .col-md-2
+          .vote_counter
+            = @question.votes_sum
+          .vote_links
+            = render 'shared/vote_links', resource: @question
