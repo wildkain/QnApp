@@ -13,6 +13,7 @@
 //= require rails-ujs
 //= require jquery
 //= require jquery.remotipart
+//= require action_cable
 //= require cocoon
 //= require bootstrap
 //= require popper
@@ -20,3 +21,6 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+var App = App || {};
+App.cable = ActionCable.createConsumer();

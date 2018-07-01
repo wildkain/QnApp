@@ -18,7 +18,7 @@
 
 
   div id="update-answer-form"
-    - if user_signed_in? && answer.persisted?
+    - if  answer.persisted?
       = form_for answer, class: "edit_answer btn btn-danger", remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
         .form-group
           = f.label :body, 'Answer'
