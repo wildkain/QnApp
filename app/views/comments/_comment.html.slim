@@ -1,0 +1,7 @@
+.comment id="comment_for_#{comment.commentable_type.downcase}_#{comment.id}"
+  .row
+    .col-md-10
+      = comment.body
+    .col-md-2
+      = link_to 'Delete Comment', comment_path(comment), method: :delete, remote: true, data: { confirm: "Are you sure?"},
+                          class: 'btn btn-danger'

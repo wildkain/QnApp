@@ -1,0 +1,7 @@
+= form_with model: [resource, resource.comments.build], class: 'new_comment', remote: true do |form|
+  = render 'shared/errors', resource: @comment
+  .form-group
+    = form.label :body, 'Your comment'
+    = form.text_area :body, class: 'form-control'
+  .form-group
+    = form.submit 'Add a comment', class: 'btn btn-primary'

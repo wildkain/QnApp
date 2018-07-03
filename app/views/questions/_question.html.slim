@@ -31,3 +31,11 @@
             = @question.votes_sum
           .vote_links
             = render 'shared/vote_links', resource: @question
+      .row
+        .col-md-12
+          .comments
+            p Comments
+            = render @question.comments
+          .comments_form
+            .errors
+            = render 'comments/form', resource: @question
