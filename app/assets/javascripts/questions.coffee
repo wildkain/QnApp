@@ -2,6 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
+  questionsCollection = $('.questions-list');
   editQuestion = (e) ->
     e.preventDefault();
     $(this).hide();
@@ -16,6 +17,6 @@ $ ->
     ,
 
     received: (data) ->
-      alert data
+      questionsCollection.append(data)
   })
 
