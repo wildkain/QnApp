@@ -18,3 +18,4 @@ $ ->
     received: (data) ->
       alert data
   })
+

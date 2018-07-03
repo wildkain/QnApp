@@ -43,11 +43,9 @@ class AnswersController < ApplicationController
 
   def publish_answer
     ActionCable.server.broadcast(
-        'answers',
-        ApplicationController.render(
-            partial: 'answers/answer',
-            locals: { answer: @answer, current_user: current_user }
-                                  )
-    )
+        "question-#{@question.id}",
+        answer: @answer,
+        counter: @answer.votes_sum,
+        attachments: @answer.attachments)
   end
 end

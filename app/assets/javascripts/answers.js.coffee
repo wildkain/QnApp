@@ -11,11 +11,14 @@ $ ->
 
   $('.answers').on 'click', '.edit-answer-link', editAnswer;
 
-  App.cable.subscriptions.create('AnswersChannel', {
+  App.cable.subscriptions.create({ channel: 'AnswersChannel', question_id: gon.question_id }, {
     connected: ->
       console.log 'Connected!';
       @perform 'follow'
-      console.log 'follow'
+      console.log gon.question_id
     received: (data) ->
-      $('.answers').append(data)
+      return if gon.user_id == data.answer.user_id
+      $('.answers').append(JST['templates/answer'](data))
+
+
   })

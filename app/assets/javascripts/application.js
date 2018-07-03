@@ -14,13 +14,16 @@
 //= require jquery
 //= require jquery.remotipart
 //= require action_cable
+//= require skim
 //= require cocoon
 //= require bootstrap
 //= require popper
 //= require bootstrap-sprockets
 //= require activestorage
 //= require turbolinks
+//= require_tree ./templates
 //= require_tree .
 
 var App = App || {};
 App.cable = ActionCable.createConsumer();
+

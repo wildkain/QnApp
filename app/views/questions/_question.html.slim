@@ -3,7 +3,7 @@
     .card-header
       .row
         .col-md-8
-          h3 = @question.title
+          h3 = @question.title unless @question.nil?
         .col-md-4
           - if current_user&.author?(@question)
             = link_to 'Edit Question', '', class: "edit-question-link btn btn-primary", data: {question: @question.id}
