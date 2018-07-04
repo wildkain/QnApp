@@ -1,10 +1,11 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_comment, only: %i[ destroy update ]
-  before_action :load_question, only: :create
+  before_action :load_commentable_obj, only: :create
+  after_action :publish_comment, only: :create
 
   def create
-    @comment = @question.comments.build(comment_params)
+    @comment = @commentable.comments.build(comment_params)
     @comment.user = current_user
     @comment.save!
   end
@@ -18,9 +19,22 @@ class CommentsController < ApplicationController
 
   private
 
-  def load_question
-    @question = Question.find(params[:question_id])
+  def publish_comment
+    return if @comment.errors.any?
+    question_id = @commentable.is_a?(Question) ? @commentable.id : @commentable.question.id
+    ActionCable.server.broadcast(
+        "question-#{question_id}-comments",
+        { comment: @comment.to_json } )
   end
+
+  def load_commentable_obj
+    @commentable = if params[:answer_id]
+                     Answer.find(params[:answer_id])
+                   elsif params[:question_id]
+                     Question.find(params[:question_id])
+                   end
+  end
+
   def load_comment
     @comment = Comment.find(params[:id])
   end

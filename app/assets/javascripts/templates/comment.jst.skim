@@ -1,0 +1,4 @@
+.comment id="comment_for_#{@comment.commentable_type.downcase}_#{@comment.id}"
+  .row
+    .col-md-10
+      = @comment.body
