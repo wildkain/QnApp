@@ -1,7 +1,10 @@
-= form_with model: [resource, resource.comments.build], class: 'new_comment', remote: true do |form|
-  = render 'shared/errors', resource: @comment
-  .form-group
-    = form.label :body, 'Your comment'
-    = form.text_area :body, class: 'form-control'
-  .form-group
-    = form.submit 'Add a comment', class: 'btn btn-primary'
+div class="comments_form_for_#{resource.class.name.underscore}"
+  .errors
+  = form_with model: [resource, resource.comments.build], class: 'new_comment',
+          html: { id: "new_comment_#{resource.class.name.underscore}_#{resource.id}" },
+          remote: true do |form|
+    .form-group
+      = form.label :body, 'Your comment'
+      = form.text_area :body, class: 'form-control'
+    .form-group
+      = form.submit 'Add a comment', class: 'submit-comment btn btn-primary'

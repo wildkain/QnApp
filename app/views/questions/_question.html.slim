@@ -34,8 +34,10 @@
       .row
         .col-md-12
           .comments
+            .comment-link
+              = link_to 'Add Comment', '', class: "comment-link btn btn-primary", data: {resource_id: @question.id, resource_type: "question"}
+
+            = render 'comments/form', resource: @question
+
             p Comments
             = render @question.comments
-          .comments_form
-            .errors
-            = render 'comments/form', resource: @question

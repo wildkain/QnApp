@@ -1,0 +1,8 @@
+$('#error').remove();
+<% if @comment.errors.any? %>
+<% @comment.errors.full_messages.each do |message| %>
+$('.errors').append('<div id="error"><%= j message %></div>');
+<% end %>
+<% else %>
+$('#comment_<%= @comment.id %>_for_<%= @comment.commentable_type.downcase %>_<%= @comment.commentable.id %>').replaceWith('<%= j render @comment %>');
+<% end %>

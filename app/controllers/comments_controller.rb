@@ -15,6 +15,7 @@ class CommentsController < ApplicationController
   end
 
   def update
+    @comment.update(comment_params) if current_user.author?(@comment)
   end
 
   private
