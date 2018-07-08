@@ -19,11 +19,3 @@
         - for attachment in @attachments
           li id="attachment-#{attachment.id}"
             a href="#{attachment.file.url}" File-"#{attachment.file.identifier}"
-
-
-
-
-
-
-
-
