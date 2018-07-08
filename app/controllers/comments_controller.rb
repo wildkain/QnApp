@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.build(comment_params)
     @comment.user = current_user
-    @comment.save!
+    @comment.save
   end
 
   def destroy

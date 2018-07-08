@@ -1,4 +1,4 @@
-div class="comments_form_for_#{resource.class.name.underscore}"
+div class="comments_form_for_#{resource.class.name.underscore}_#{resource.id} comments_form"
   .errors
   = form_with model: [resource, resource.comments.build], class: 'new_comment',
           html: { id: "new_comment_#{resource.class.name.underscore}_#{resource.id}" },

@@ -33,9 +33,8 @@
             = render 'shared/vote_links', resource: @question
       .row
         .col-md-12
-          .comments
-            .comment-link
-              = link_to 'Add Comment', '', class: "comment-link btn btn-primary", data: {resource_id: @question.id, resource_type: "question"}
+          div class="comments_for_question_#{@question.id} comments"
+            = link_to 'Add Comment', '', class: "comment-link_for_question_#{@question.id} comment-link btn btn-primary", data: {resource_id: @question.id, resource_type: "question"}
 
             = render 'comments/form', resource: @question
 

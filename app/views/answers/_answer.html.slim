@@ -27,3 +27,11 @@
           = f.submit 'Save', class: 'btn btn-primary'
 
 
+  .col-md-12
+    div class="comments_for_answer_#{answer.id} comments"
+      = link_to 'Add Comment', '', class: "comment-link_for_answer_#{answer.id} comment-link btn btn-primary", data: {resource_id: answer.id, resource_type: "answer"}
+
+      = render 'comments/form', resource: answer
+
+      p Comments
+      = render answer.comments

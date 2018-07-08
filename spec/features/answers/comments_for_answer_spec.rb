@@ -1,24 +1,25 @@
 require_relative '../acceptance_helper.rb'
 
 
-feature 'Add comments to question', %q{
+feature 'Add comments to answer', %q{
   In order to comment and explain
   As logged_in user
-  I want to be able to comment questions
+  I want to be able to comment answers
 } do
   given(:user) { create :user }
-  given(:question) { create(:question, user: user)}
+  given!(:question) { create(:question, user: user)}
+  given!(:answer) { create(:answer, question: question)}
 
-  scenario "Logged in user add a comment to question", js: true do
+  scenario "Logged in user add a comment to answer", js: true do
     sign_in(user)
     visit question_path(question)
 
-    within ".question-block" do
-      click_on "Add Comment"
+    within ".answer-block#answer-#{answer.id}" do
+      click_on 'Add Comment'
       fill_in "Your comment", with: "Test comment"
       click_on 'Add a comment'
     end
-    sleep 3
+    sleep 1
 
     expect(page).to have_content 'Test comment'
   end
@@ -59,12 +60,14 @@ feature 'Add comments to question', %q{
       end
 
       Capybara.using_session('user') do
-        within ".question-block" do
+
+        within ".answer-block#answer-#{answer.id}" do
           click_on 'Add Comment'
           fill_in 'Your comment', with: 'My comment'
           click_on 'Add a comment'
         end
-        within '.comments' do
+
+        within ".comments_for_answer_#{answer.id}" do
           expect(page).to have_content 'My comment'
         end
 

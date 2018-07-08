@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: "questions#index"
   resources :questions, concerns: [:votable, :commentable ] do
-    resources :answers, concerns: [:votable ], shallow: true do
+    resources :answers, concerns: [:votable, :commentable ], shallow: true do
       patch :best, on: :member
     end
   end

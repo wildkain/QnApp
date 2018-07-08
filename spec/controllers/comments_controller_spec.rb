@@ -21,7 +21,7 @@ RSpec.describe CommentsController, type: :controller do
     end
   end
 
-  describe "GET #destroy" do
+  describe "DELETE #destroy" do
     context 'Author try to delete comment' do
       it 'delete comment' do
         expect { delete :destroy, params: { id: comment, format: :js }}.to change(Comment, :count).by(-1)
@@ -48,10 +48,6 @@ RSpec.describe CommentsController, type: :controller do
     it "update the comment" do
       comment.reload
       expect(comment.body).to eq 'updated comment'
-    end
-
-    it 'assign commentable' do
-      expect(assigns(:commentable)).to eq question
     end
 
     it 'render update template' do
