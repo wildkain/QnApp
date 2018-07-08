@@ -38,4 +38,29 @@ feature 'Create question', %q{
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
+  context 'multiple sessions' do
+    scenario 'question appears to another user page', js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit questions_path
+      end
+
+      Capybara.using_session('guest') do
+        visit questions_path
+      end
+
+      Capybara.using_session('user') do
+        click_on 'Ask question'
+        fill_in 'Title', with: 'Test TITLE question'
+        fill_in 'Body', with: 'Test BODY question'
+        click_on 'Create'
+        sleep 1
+
+        Capybara.using_session('guest') do
+          expect(page).to have_content 'Test TITLE question'
+        end
+      end
+    end
+  end
+
 end

@@ -1,0 +1,7 @@
+.question id="question_#{question.id}"
+  .card.bg-default
+    .h5.card-header
+      = link_to "#{question.title}", question_path(question)
+    .card-body
+      p.card-text
+        = question.body

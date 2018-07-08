@@ -1,0 +1,10 @@
+$('#error').remove();
+<% if @comment.errors.any? %>
+<% @comment.errors.full_messages.each do |message| %>
+$('.errors').append('<div id="error"><%= j message %></div>');
+<% end %>
+<% else %>
+$('.comment-link_for_<%= @comment.commentable_type.downcase %>_<%= @comment.commentable.id %>').toggle();
+$('#new_comment_<%= @comment.commentable_type.downcase %>_<%= @comment.commentable.id %>').toggle();
+$(".comments_for_<%= @comment.commentable_type.downcase %>_<%= @comment.commentable.id %>").append('<%= j render @comment %>');
+<% end %>
