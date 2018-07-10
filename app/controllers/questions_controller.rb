@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
   after_action :publish_question, only: :create
   before_action :build_answer, only: :show
   respond_to :html
+  respond_to :js, only: :update
 
   def index
     respond_with(@questions = Question.all.order(created_at: :desc))
