@@ -49,6 +49,7 @@ gem 'octicons_helper'
 gem 'devise'
 gem 'skim'
 gem 'gon'
+gem 'responders'
 
 
 group :development, :test do

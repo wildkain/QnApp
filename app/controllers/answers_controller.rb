@@ -7,24 +7,25 @@ class AnswersController < ApplicationController
   before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i[destroy update best]
   after_action :publish_answer, only: :create
+  respond_to :js
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-    @answer.save
+    respond_with(@answer = @question.answers.create(answer_params.merge(user_id: current_user.id)))
   end
 
   def destroy
-    @answer.destroy if current_user.author?(@answer)
+    respond_with(@answer.destroy) if current_user.author?(@answer)
   end
 
   def update
-    @answer.update(answer_params) if current_user.author?(@answer)
-    @question = @answer.question
+    if current_user.author?(@answer)
+      @answer.update(answer_params)
+      respond_with(@answer)
+    end
   end
 
   def best
-    @answer.best! if current_user.author?(@answer.question)
+    respond_with(@answer.best!) if current_user.author?(@answer.question)
   end
 
   private
@@ -35,6 +36,7 @@ class AnswersController < ApplicationController
 
   def find_answer
     @answer = Answer.find(params[:id])
+    @question = @answer.question
   end
 
   def find_question

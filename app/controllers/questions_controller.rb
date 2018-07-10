@@ -3,49 +3,47 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except:  %i[index show]
   before_action :load_question, only: %i[show edit update destroy]
-  #after_action :publish_question, only: :create
+  after_action :publish_question, only: :create
+  before_action :build_answer, only: :show
+  respond_to :html
+  respond_to :js, only: :update
 
   def index
-    @questions = Question.all.order(created_at: :desc)
+    respond_with(@questions = Question.all.order(created_at: :desc))
   end
 
   def show
-    @answer = @question.answers.build
-    @answer.attachments.build
-
+    respond_with(@question)
   end
 
   def new
-    @question = current_user.questions.build
-    @question.attachments.build
+    respond_with(@question = current_user.questions.build)
   end
 
   def edit; end
 
   def create
-    @question = current_user.questions.build(question_params)
-    if @question.save
-      publish_question
-      redirect_to @question, notice: 'Your question successfully created.'
-    else
-      render :new
-    end
+    respond_with(@question = current_user.questions.create(question_params))
   end
 
   def update
     @question.update(question_params) if current_user.author?(@question)
+    respond_with(@question)
   end
 
   def destroy
-    @question.destroy if current_user.author?(@question)
-
-    redirect_to questions_path
+    respond_with(@question.destroy) if current_user.author?(@question)
   end
 
   private
 
+  def build_answer
+    @answer = @question.answers.build
+  end
+
   def publish_question
-    return if @question.errors.any?
+    logger.debug "Question attributes hash: #{@question.attributes.inspect}"
+    return if @question.errors.any? || @question.nil?
     ActionCable.server.broadcast(
         'questions',
         ApplicationController.render(
