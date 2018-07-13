@@ -45,6 +45,7 @@ gem 'cocoon'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-vkontakte'
+gem 'omniauth-twitter'
 
 
 #UI
