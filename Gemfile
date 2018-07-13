@@ -41,12 +41,18 @@ gem 'carrierwave'
 gem 'remotipart'
 gem 'cocoon'
 
+#Authentification
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-vkontakte'
+
+
 #UI
 gem 'slim'
 gem 'jquery-rails'
 gem 'bootstrap'
 gem 'octicons_helper'
-gem 'devise'
+
 gem 'skim'
 gem 'gon'
 gem 'responders'
