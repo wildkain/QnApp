@@ -17,7 +17,15 @@ feature 'Any non-registered user can sign up', %q{
     fill_in 'Password confirmation', with: '123456'
     click_button 'Sign up'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    open_email('user123@test.com')
+    current_email.click_link 'Confirm my account'
+
+    fill_in 'Email', with: 'user123@test.com'
+    fill_in 'Password', with: '123456'
+    click_button 'Signin'
+
+
+    expect(page).to have_content 'Signed in successfully.'
   end
 
   scenario 'Non-registered user try to sign up with invalid data(email)' do

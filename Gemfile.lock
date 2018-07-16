@@ -66,6 +66,9 @@ GEM
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
       xpath (~> 3.1)
+    capybara-email (3.0.1)
+      capybara (>= 2.4, < 4.0)
+      mail
     capybara-webkit (1.15.0)
       capybara (>= 2.3, < 4.0)
       json
@@ -310,6 +313,7 @@ DEPENDENCIES
   bootstrap
   byebug
   capybara (>= 2.15, < 4.0)
+  capybara-email
   capybara-webkit
   carrierwave
   chromedriver-helper
