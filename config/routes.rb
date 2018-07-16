@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     end
   end
 
+  devise_scope :user do
+    post '/register' => 'omniauth_callbacks#register'
+  end
+
   concern :commentable do
     resources :comments, only: [:create, :destroy, :update], shallow: true
   end

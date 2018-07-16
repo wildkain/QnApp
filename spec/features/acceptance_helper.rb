@@ -9,6 +9,8 @@ RSpec.configure do |config|
 
   config.include AcceptanceMacros, type: :feature
 
+  config.include(OmniauthMacros)
+
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
   end
@@ -28,5 +30,8 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.logger    = Rails.logger
 
 end

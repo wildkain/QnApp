@@ -1,0 +1,6 @@
+= form_tag register_path, method: :post do
+  p = label_tag 'auth[info][email]', 'Email'
+  p = email_field 'auth[info]', :email
+  p = submit_tag 'Submit'
+
+p = session[:auth]
