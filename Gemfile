@@ -41,12 +41,19 @@ gem 'carrierwave'
 gem 'remotipart'
 gem 'cocoon'
 
+#Authentification
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-vkontakte'
+gem 'omniauth-twitter'
+
+
 #UI
 gem 'slim'
 gem 'jquery-rails'
 gem 'bootstrap'
 gem 'octicons_helper'
-gem 'devise'
+
 gem 'skim'
 gem 'gon'
 gem 'responders'
@@ -73,6 +80,7 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15', '< 4.0'
+  gem 'capybara-email'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
   gem 'shoulda-matchers'
@@ -80,7 +88,6 @@ group :test do
   gem 'launchy'
   gem 'geckodriver-helper'
   gem 'database_cleaner'
-
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
