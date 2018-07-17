@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks'}
 
   get 'comment/create'
   get 'comment/destroy'
@@ -11,13 +11,15 @@ Rails.application.routes.draw do
     end
   end
 
+  devise_scope :user do
+    post '/register' => 'omniauth_callbacks#register'
+  end
+
   concern :commentable do
     resources :comments, only: [:create, :destroy, :update], shallow: true
   end
 
 
-  devise_for :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: "questions#index"
   resources :questions, concerns: [:votable, :commentable ] do
     resources :answers, concerns: [:votable, :commentable ], shallow: true do

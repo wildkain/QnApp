@@ -31,3 +31,8 @@ config/database.yml
 
 #Rubymine
 .idea
+
+
+#secrets
+/config/secrets.yml
+/config/credentials.yml.enc

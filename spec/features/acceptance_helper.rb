@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'capybara/email/rspec'
 
 RSpec.configure do |config|
 
@@ -8,6 +9,8 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.include AcceptanceMacros, type: :feature
+
+  config.include(OmniauthMacros)
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
@@ -28,5 +31,8 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.logger    = Rails.logger
 
 end
