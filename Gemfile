@@ -46,6 +46,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-vkontakte'
 gem 'omniauth-twitter'
+gem 'cancancan'
 
 
 #UI

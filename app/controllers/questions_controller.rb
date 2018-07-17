@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
   before_action :build_answer, only: :show
   respond_to :html
   respond_to :js, only: :update
-
+  authorize_resource
   def index
     respond_with(@questions = Question.all.order(created_at: :desc))
   end
