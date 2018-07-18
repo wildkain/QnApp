@@ -29,6 +29,9 @@ class Ability
     can :create, [Question, Answer, Comment]
     can :update, [Question, Answer, Comment], user: user
     can :destroy, [Question, Answer, Comment], user: user
+    can :destroy, Attachment do |attachment|
+      user.author?(attachment.attachmentable)
+    end
   end
 end
 

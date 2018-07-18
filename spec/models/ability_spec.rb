@@ -27,6 +27,10 @@ RSpec.describe Ability, type: :model do
     let(:other_user_answer) { create(:answer, user: other_user)}
     let(:authored_comment) { create(:comment, commentable: question, user: user)}
     let(:other_user_comment) { create(:comment, commentable: question, user: other_user)}
+    let(:authored_question_attachment) { create(:attachment, attachmentable: authored_question)}
+    let(:other_user_question_attachment) { create(:attachment, attachmentable: other_user_question)}
+    let(:authored_answer_attachment) { create(:attachment, attachmentable: authored_answer)}
+    let(:other_user_answer_attachment) { create(:attachment, attachmentable: other_user_answer)}
 
     it { should_not be_able_to :manage, :all}
     it { should be_able_to :read, :all }
@@ -41,6 +45,8 @@ RSpec.describe Ability, type: :model do
       it { should be_able_to :vote_count_down, other_user_question, user: user }
       it { should_not be_able_to :vote_count_up, authored_question, user: user }
       it { should_not be_able_to :vote_count_down, authored_question, user: user }
+      it { should be_able_to :destroy, authored_question_attachment, user: user }
+      it { should_not be_able_to :destroy, other_user_question_attachment, user: user }
     end
 
     context 'Answer' do
@@ -55,6 +61,8 @@ RSpec.describe Ability, type: :model do
       it { should_not be_able_to :vote_count_down, authored_answer, user: user }
       it { should be_able_to :best, create(:answer, user: other_user , question: authored_question) }
       it { should_not be_able_to :best, create(:answer, user: other_user , question: other_user_question) }
+      it { should be_able_to :destroy, authored_answer_attachment, user: user }
+      it { should_not be_able_to :destroy, other_user_answer_attachment, user: user }
     end
 
     context 'Comment' do
