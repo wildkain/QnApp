@@ -28,6 +28,7 @@ class Ability
     can :best, Answer, question: { user_id: user.id }
     can :create, [Question, Answer, Comment]
     can :update, [Question, Answer, Comment], user: user
+    can :destroy, [Question, Answer, Comment], user: user
   end
 end
 

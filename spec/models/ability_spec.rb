@@ -25,6 +25,8 @@ RSpec.describe Ability, type: :model do
     let(:other_user_question) { create(:question, user: other_user) }
     let(:authored_answer) { create(:answer, user: user)}
     let(:other_user_answer) { create(:answer, user: other_user)}
+    let(:authored_comment) { create(:comment, commentable: question, user: user)}
+    let(:other_user_comment) { create(:comment, commentable: question, user: other_user)}
 
     it { should_not be_able_to :manage, :all}
     it { should be_able_to :read, :all }
@@ -33,6 +35,8 @@ RSpec.describe Ability, type: :model do
       it { should be_able_to :create, Question }
       it { should be_able_to :update, authored_question, user: user }
       it { should_not be_able_to :update, other_user_question, user: user }
+      it { should be_able_to :destroy, authored_question, user: user }
+      it { should_not be_able_to :destroy, other_user_question, user: user }
       it { should be_able_to :vote_count_up, other_user_question, user: user }
       it { should be_able_to :vote_count_down, other_user_question, user: user }
       it { should_not be_able_to :vote_count_up, authored_question, user: user }
@@ -43,6 +47,8 @@ RSpec.describe Ability, type: :model do
       it { should be_able_to :create, Answer }
       it { should be_able_to :update, create(:answer, user: user), user: user }
       it { should_not be_able_to :update, create(:answer, user: other_user), user: user }
+      it { should be_able_to :destroy, authored_answer, user: user }
+      it { should_not be_able_to :destroy, other_user_answer, user: user }
       it { should be_able_to :vote_count_up, other_user_answer, user: user }
       it { should be_able_to :vote_count_down, other_user_answer, user: user }
       it { should_not be_able_to :vote_count_up, authored_answer, user: user }
@@ -55,6 +61,8 @@ RSpec.describe Ability, type: :model do
       it { should be_able_to :create, Comment }
       it { should be_able_to :update, create(:comment, commentable: question, user: user), user: user }
       it { should_not be_able_to :update, create(:comment, commentable: question, user: other_user), user: user }
+      it { should be_able_to :destroy, authored_comment, user: user }
+      it { should_not be_able_to :destroy, other_user_comment, user: user }
     end
 
 
