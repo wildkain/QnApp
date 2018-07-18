@@ -21,6 +21,12 @@ class Ability
 
   def user_abilities
     guest_abilities
+    can :vote_count_up, [Question, Answer] do |votable|
+      !user.author?(votable)
+    end
+    can :vote_count_down, [Question, Answer]do |votable|
+      !user.author?(votable)
+    end
     can :create, [Question, Answer, Comment]
     can :update, [Question, Answer, Comment], user: user
   end
