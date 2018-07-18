@@ -25,7 +25,7 @@ class AnswersController < ApplicationController
   end
 
   def best
-    respond_with(@answer.best!) if current_user.author?(@answer.question)
+    respond_with(@answer.best!)
   end
 
   private

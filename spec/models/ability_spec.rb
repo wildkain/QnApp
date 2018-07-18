@@ -35,6 +35,8 @@ RSpec.describe Ability, type: :model do
       it { should_not be_able_to :update, other_user_question, user: user }
       it { should be_able_to :vote_count_up, other_user_question, user: user }
       it { should be_able_to :vote_count_down, other_user_question, user: user }
+      it { should_not be_able_to :vote_count_up, authored_question, user: user }
+      it { should_not be_able_to :vote_count_down, authored_question, user: user }
     end
 
     context 'Answer' do
@@ -43,6 +45,10 @@ RSpec.describe Ability, type: :model do
       it { should_not be_able_to :update, create(:answer, user: other_user), user: user }
       it { should be_able_to :vote_count_up, other_user_answer, user: user }
       it { should be_able_to :vote_count_down, other_user_answer, user: user }
+      it { should_not be_able_to :vote_count_up, authored_answer, user: user }
+      it { should_not be_able_to :vote_count_down, authored_answer, user: user }
+      it { should be_able_to :best, create(:answer, user: other_user , question: authored_question) }
+      it { should_not be_able_to :best, create(:answer, user: other_user , question: other_user_question) }
     end
 
     context 'Comment' do
