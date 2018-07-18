@@ -72,7 +72,5 @@ RSpec.describe Ability, type: :model do
       it { should be_able_to :destroy, authored_comment, user: user }
       it { should_not be_able_to :destroy, other_user_comment, user: user }
     end
-
-
   end
 end
