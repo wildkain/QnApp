@@ -54,17 +54,14 @@ feature 'User can vote for answer', %q{
     before { sign_in(user); visit question_path(question) }
     scenario 'Author try to VOTE UP for answer' do
       within '.answers' do
-        click_on 'Vote Up'
+        expect(page).to_not have_content 'Vote Up'
       end
-      expect(page).to have_content "Author can't vote"
     end
 
     scenario 'Author try to VOTE DOWN for answer' do
       within '.answers' do
-        click_on 'Vote Up'
+        expect(page).to_not have_content'Vote Down'
       end
-
-      expect(page).to have_content "Author can't vote"
     end
 
   end
@@ -72,9 +69,7 @@ feature 'User can vote for answer', %q{
   scenario 'Not-auth user try to vote answer', js: true do
     visit question_path(question)
     within '.answers' do
-      click_link 'Vote Up'
+      expect(page).to_not have_content 'Vote Up'
     end
-
-    expect(page).to have_content "You need to sign in or sign up before continuing."
   end
 end

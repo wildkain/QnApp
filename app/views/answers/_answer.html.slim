@@ -10,15 +10,16 @@
     = render 'shared/attachments', resource: answer unless answer.attachments.empty?
 
   .col-md-2.mt-4 id="actions"
-    - if answer.persisted? && current_user&.author?(answer.question)
+    - if answer.persisted? && can?(:best, answer)
       = link_to 'Best Answer', best_answer_path(answer), class: 'btn btn-success',  remote: true, method: :patch
-    - if current_user&.author?(answer) && answer.persisted?
+    - if can?(:update, answer) && answer.persisted?
       = link_to 'Edit Answer', '', class: 'edit-answer-link btn btn-primary', data: { answer_id: answer.id }
+    - if can?(:destroy, answer) && answer.persisted?
       = link_to 'Delete Answer', answer, remote: true, method: :delete, class: 'delete-answer-link btn btn-danger', data: { answer_id: answer.id }
 
 
   div id="update-answer-form"
-    - if  answer.persisted?
+    - if  answer.persisted? && can?(:update, answer)
       = form_for answer, class: "edit_answer btn btn-danger", remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
         .form-group
           = f.label :body, 'Answer'
