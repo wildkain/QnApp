@@ -22,7 +22,7 @@ class Ability
   def user_abilities
     guest_abilities
     can [:vote_count_up, :vote_count_down], [Question, Answer] do |votable|
-      !user.author?(votable)
+      !user.author?(votable) && (!votable.already_voted?(user, 1) || !votable.already_voted?(user, -1))
     end
 
     can :best, Answer, question: { user_id: user.id }

@@ -91,7 +91,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'render update template' do
-        patch :update,  params: { id: answer, question_id: question,
+        patch :update,  params: { id: authored_answer, question_id: question,
                                       answer: attributes_for(:answer), format: :js }
         expect(response).to render_template :update
       end

@@ -20,7 +20,6 @@ feature 'Add files to answer', %q{
     attach_file 'File', "#{Rails.root}/spec/test_file.txt"
     click_on 'Answer the question'
     sleep(2)
-    save_and_open_page
     within '.answers' do
       expect(page).to have_link 'test_file.txt', href: '/uploads/attachment/file/1/test_file.txt'
     end
