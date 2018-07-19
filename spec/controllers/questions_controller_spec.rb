@@ -51,14 +51,15 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #edit' do
     sign_in_user
+    let!(:authored_question) {create(:question, user: @user)}
 
-    before {get :edit, params: { id: question }}
+    before {get :edit, params: { id: authored_question }}
     it 'assigns requested question to @question var' do
-      expect(assigns(:question)).to eq question
+      expect(assigns(:question)).to eq authored_question
     end
 
     it 'renders edit view' do
-      expect(response).to render_template :edit
+      expect(response).to have_http_status(200)
     end
   end
 
@@ -107,8 +108,8 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'redirect to updated question' do
-        patch :update,  params: { id: question, question: attributes_for(:question), format: :js }
-        expect(response).to redirect_to question
+        patch :update,  params: { id: authored_question, question: attributes_for(:question), format: :js }
+        expect(response).to redirect_to authored_question
       end
 
     end

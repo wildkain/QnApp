@@ -9,6 +9,8 @@ class AnswersController < ApplicationController
   after_action :publish_answer, only: :create
   respond_to :js
 
+  authorize_resource
+
   def create
     respond_with(@answer = @question.answers.create(answer_params.merge(user_id: current_user.id)))
   end
@@ -25,7 +27,7 @@ class AnswersController < ApplicationController
   end
 
   def best
-    respond_with(@answer.best!) if current_user.author?(@answer.question)
+    respond_with(@answer.best!)
   end
 
   private

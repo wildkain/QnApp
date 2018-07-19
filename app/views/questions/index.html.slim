@@ -1,5 +1,6 @@
 .row.justify-content-right
-  p= link_to 'Ask question', new_question_path, class: 'btn btn-primary'
+  - if can?(:create, Question)
+    p= link_to 'Ask question', new_question_path, class: 'btn btn-primary'
 .questions-list
   - unless @questions.empty?
     - @questions.each do |question|

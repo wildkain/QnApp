@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   before_action :load_comment, only: %i[ destroy update ]
   before_action :load_commentable_obj, only: :create
   after_action :publish_comment, only: :create
-
+  authorize_resource
   respond_to :js
   def create
     respond_with(@comment = @commentable.comments.create(comment_params.merge(user: current_user)))

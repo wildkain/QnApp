@@ -57,8 +57,7 @@ feature 'Any registered user can create question\s answer from question show', %
 
   scenario 'Non registered user try to create answer to question' do
     visit question_path(question)
-    click_button 'Answer the question'
 
-    expect(page).to have_content "You need to sign in or sign up before continuing."
+    expect(page).to_not have_content 'Answer the question'
   end
 end
