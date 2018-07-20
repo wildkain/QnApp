@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   before_action :gon_user, unless: :devise_controller?
+
   check_authorization unless :devise_controller?
 
   rescue_from CanCan::AccessDenied do |exeption|
