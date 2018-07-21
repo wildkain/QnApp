@@ -33,6 +33,7 @@ class Ability
     can :destroy, Attachment do |attachment|
       user.author?(attachment.attachmentable)
     end
+
   end
 end
 

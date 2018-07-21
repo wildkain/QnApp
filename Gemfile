@@ -48,6 +48,9 @@ gem 'omniauth-vkontakte'
 gem 'omniauth-twitter'
 gem 'cancancan'
 
+#Api
+gem 'doorkeeper', '4.2.6'
+
 
 #UI
 gem 'slim'
@@ -89,6 +92,7 @@ group :test do
   gem 'launchy'
   gem 'geckodriver-helper'
   gem 'database_cleaner'
+  gem 'json_spec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
