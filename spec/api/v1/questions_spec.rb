@@ -95,5 +95,35 @@ describe 'Questions API' do
   end
 
 
+  describe 'POST /create' do
+    context 'unauthorized' do
+      it 'returns 401 status if there is no access_token' do
+        get "/api/v1/questions/", params: { action: :create, format: :json }
+        expect(response.status).to eq 401
+      end
+
+      it 'returns 401 status if access_token is invalid' do
+        get "/api/v1/questions/", params: { action: :create, format: :json, access_token: '1234'}
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      let(:user) { create :user }
+      let(:access_token) { create(:access_token, resource_owner_id: user.id) }
+      let(:params) { { format: :json, access_token: access_token.token, question: attributes_for(:question) } }
+
+      before { post '/api/v1/questions', params: params }
+
+      it 'returns status 200 OK' do
+        expect(response).to be_successful
+      end
+
+      it 'creates new qustions and saves to db' do
+        expect{ post '/api/v1/questions/', params: params }.to change { Question.count }.by(1)
+      end
+    end
+
+  end
 
 end
