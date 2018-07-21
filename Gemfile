@@ -50,6 +50,9 @@ gem 'cancancan'
 
 #Api
 gem 'doorkeeper', '4.2.6'
+gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'
 
 
 #UI
