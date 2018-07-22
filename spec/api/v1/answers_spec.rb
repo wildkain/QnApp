@@ -7,6 +7,7 @@ describe 'Answers API' do
   let!(:answers) { create_list(:answer, 5, question: question, user: user) }
   let!(:answer) { answers.first }
   let!(:comment) { create(:comment, commentable: answer, user: user) }
+  let!(:attachment) { create(:attachment, attachmentable: answer) }
 
 
   describe 'GET /index' do
@@ -68,9 +69,24 @@ describe 'Answers API' do
         end
       end
 
-      %w(id body created_at updated_at).each  do |attr|
-        it "comment object in comments array contains #{attr}" do
-          expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("comments/0")
+      context 'comments' do
+
+        %w(id body created_at updated_at).each  do |attr|
+          it "comment object in comments array contains #{attr}" do
+            expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("comments/0")
+          end
+        end
+      end
+
+      context 'attachments' do
+        it 'attachment include answer object' do
+          expect(response.body).to have_json_size(1).at_path("attachments")
+        end
+
+        %w(url).each do |attr|
+          it "answers attachment object contains #{attr}" do
+            expect(response.body).to be_json_eql(attachment.file.send(attr.to_sym).to_json).at_path("attachments/0/#{attr}")
+          end
         end
       end
     end
