@@ -80,6 +80,8 @@ describe 'Questions API' do
       let(:user) { create :user }
       let(:access_token) { create(:access_token, resource_owner_id: user.id) }
       let!(:answer) {create(:answer, question: question )}
+      let!(:comments) {create_list(:comment, 5, commentable: question, user: user)}
+      let!(:comment) { comments.first }
       before { get "/api/v1/questions/#{question.id}", params: { format: :json, access_token: access_token.token } }
 
       it 'returns status 200 OK' do
@@ -89,6 +91,12 @@ describe 'Questions API' do
       %w(id title body created_at updated_at).each do |attr|
         it "question object contains #{attr}" do
           expect(response.body).to be_json_eql(question.send(attr.to_sym).to_json).at_path("#{attr}")
+        end
+      end
+
+      %w(id body created_at updated_at).each  do |attr|
+        it "comment object in comments array contains #{attr}" do
+          expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("comments/0")
         end
       end
     end
