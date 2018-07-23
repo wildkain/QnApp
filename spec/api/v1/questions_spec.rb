@@ -74,7 +74,7 @@ describe 'Questions API' do
       let!(:comment) { comments.first }
       let!(:attachment) { create(:attachment, attachmentable: question) }
 
-      before { get "/api/v1/questions/#{question.id}", params: { format: :json, access_token: access_token.token } }
+      before { do_request(access_token: access_token.token) }
 
       it_behaves_like "API successful response"
 
@@ -98,36 +98,32 @@ describe 'Questions API' do
         end
       end
     end
+    def do_request(options = {})
+      get "/api/v1/questions/#{question.id}", params: {format: :json}.merge(options)
+    end
   end
 
 
   describe 'POST /create' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get "/api/v1/questions/", params: { action: :create, format: :json }
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get "/api/v1/questions/", params: { action: :create, format: :json, access_token: '1234'}
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like "API Authenticable"
 
     context 'authorized' do
       let(:user) { create :user }
       let(:access_token) { create(:access_token, resource_owner_id: user.id) }
       let(:params) { { format: :json, access_token: access_token.token, question: attributes_for(:question) } }
 
-      before { post '/api/v1/questions', params: params }
+      before { do_request(params) }
 
       it_behaves_like "API successful response"
 
       it 'creates new qustions and saves to db' do
-        expect{ post '/api/v1/questions/', params: params }.to change { Question.count }.by(1)
+        expect{ do_request(params) }.to change { Question.count }.by(1)
       end
     end
 
+    def do_request(options = {})
+      post '/api/v1/questions/', params: {format: :json}.merge(options)
+    end
   end
 
 end
