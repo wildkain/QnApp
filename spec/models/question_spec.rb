@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Question, type: :model do
+  subject { build(:question)}
   it { should have_many(:answers).dependent(:destroy) }
   it { should have_many(:attachments).dependent(:destroy) }
   it { should have_many(:comments).dependent(:destroy)}
@@ -12,7 +13,15 @@ RSpec.describe Question, type: :model do
   let(:another_user) { create :user }
   let(:question) { create :question }
 
-
+  it 'should calculate reputation after creating' do
+    expect(subject).to receive(:calculate_reputation)
+    subject.save!
+  end
+  it 'should not calculate reputation after update' do
+    subject.save!
+    expect(subject).to_not receive(:calculate_reputation)
+    subject.update(title: '123')
+  end
   describe '#vote' do
     it 'change votes counter' do
       expect{ question.vote(user, 1) }.to change(Vote, :count).by 1
