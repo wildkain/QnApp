@@ -84,14 +84,8 @@ describe 'Questions API' do
         end
       end
 
-      context 'comments' do
+      it_behaves_like "API Commentable"
 
-        %w(id body created_at updated_at).each  do |attr|
-          it "comment object in comments array contains #{attr}" do
-            expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("comments/0")
-          end
-        end
-      end
       context 'attachments' do
         it 'attachment include question object' do
           expect(response.body).to have_json_size(1).at_path("attachments")
