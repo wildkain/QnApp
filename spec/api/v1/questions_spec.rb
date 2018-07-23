@@ -85,19 +85,9 @@ describe 'Questions API' do
       end
 
       it_behaves_like "API Commentable"
-
-      context 'attachments' do
-        it 'attachment include question object' do
-          expect(response.body).to have_json_size(1).at_path("attachments")
-        end
-
-        %w(url).each do |attr|
-          it "question's attachment object contains #{attr}" do
-            expect(response.body).to be_json_eql(attachment.file.send(attr.to_sym).to_json).at_path("attachments/0/#{attr}")
-          end
-        end
-      end
+      it_behaves_like "API Attachable"
     end
+
     def do_request(options = {})
       get "/api/v1/questions/#{question.id}", params: {format: :json}.merge(options)
     end
