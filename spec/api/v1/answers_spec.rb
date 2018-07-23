@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Answers API' do
@@ -9,26 +11,23 @@ describe 'Answers API' do
   let!(:comment) { create(:comment, commentable: answer, user: user) }
   let!(:attachment) { create(:attachment, attachmentable: answer) }
 
-
   describe 'GET /index' do
-
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'authorized' do
       before { do_request(access_token: access_token.token) }
 
-      it_behaves_like "API successful response"
+      it_behaves_like 'API successful response'
 
       it 'return answers collections' do
         expect(response.body).to have_json_size(5)
       end
 
-      %w(id body created_at updated_at).each do |attr|
+      %w[id body created_at updated_at].each do |attr|
         it "answer object contains #{attr}" do
           expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("0/#{attr}")
         end
       end
-
     end
 
     def do_request(options = {})
@@ -37,37 +36,36 @@ describe 'Answers API' do
   end
 
   describe 'GET /show' do
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'authorized' do
       before { do_request(question_id: question.id, access_token: access_token.token) }
 
-      it_behaves_like "API successful response"
+      it_behaves_like 'API successful response'
 
-      %w(body created_at updated_at).each do |attr|
+      %w[body created_at updated_at].each do |attr|
         it "answer object contains #{attr}" do
-          expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("#{attr}")
+          expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path(attr.to_s)
         end
       end
 
-      it_behaves_like "API Commentable"
-      it_behaves_like "API Attachable"
+      it_behaves_like 'API Commentable'
+      it_behaves_like 'API Attachable'
     end
 
     def do_request(options = {})
       get "/api/v1/answers/#{answer.id}", params: { format: :json }.merge(options)
     end
-
   end
 
   describe 'POST /create' do
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'authorized' do
       let(:params) { { action: :create, format: :json, access_token: access_token.token, answer: attributes_for(:answer) } }
       before { do_request(params) }
 
-      it_behaves_like "API successful response"
+      it_behaves_like 'API successful response'
 
       it 'saves new answer database' do
         expect { do_request(params) }.to change(question.answers, :count).by(1)

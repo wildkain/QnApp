@@ -1,4 +1,6 @@
-shared_examples_for "API Authenticable" do
+# frozen_string_literal: true
+
+shared_examples_for 'API Authenticable' do
   context 'unauthorized' do
     it 'returns 401 status if there is no access_token' do
       do_request
@@ -9,6 +11,5 @@ shared_examples_for "API Authenticable" do
       do_request(access_token: '12345')
       expect(response.status).to eq 401
     end
-
   end
 end

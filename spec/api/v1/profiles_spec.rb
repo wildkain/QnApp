@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Profiles API' do
-
   describe 'GET /me' do
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'authorized' do
       let(:me) { create(:user) }
@@ -11,8 +12,7 @@ describe 'Profiles API' do
 
       before { do_request(access_token: access_token.token) }
 
-      it_behaves_like "API successful response"
-
+      it_behaves_like 'API successful response'
 
       %w[id email created_at updated_at admin].each do |attr|
         it "contains #{attr}" do
@@ -25,7 +25,6 @@ describe 'Profiles API' do
           expect(response.body).to_not have_json_path(attr)
         end
       end
-
     end
 
     def do_request(options = {})
@@ -33,9 +32,8 @@ describe 'Profiles API' do
     end
   end
 
-
   describe 'GET /index' do
-    it_behaves_like "API Authenticable"
+    it_behaves_like 'API Authenticable'
 
     context 'Authorized' do
       let!(:users) { create_list(:user, 5) }
@@ -44,12 +42,11 @@ describe 'Profiles API' do
 
       before { do_request(access_token: access_token.token) }
 
-      it_behaves_like "API successful response"
+      it_behaves_like 'API successful response'
 
       it 'does not contain current user and contains all users from collection ' do
         expect(response.body).to be_json_eql(users.to_json)
       end
-
     end
   end
 

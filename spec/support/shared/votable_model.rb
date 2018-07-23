@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 shared_examples_for 'Votable Model' do
   describe '#vote' do
     it 'change votes counter' do
-      expect{ object.vote(user, 1) }.to change(Vote, :count).by 1
+      expect { object.vote(user, 1) }.to change(Vote, :count).by 1
     end
 
     context  'vote must be correct' do
@@ -18,19 +20,17 @@ shared_examples_for 'Votable Model' do
       it 'have reference to self' do
         expect(@vote.votable).to eq object
       end
-
     end
   end
 
   describe '#already_voted?' do
-
     let!(:vote) { create(:vote, :up, user: user, votable: object) }
 
     it 'return true if user already vote for resource' do
       expect(object.already_voted?(user, 1)).to eq true
     end
 
-    it "return false if resource have not user vote" do
+    it 'return false if resource have not user vote' do
       expect(object.already_voted?(another_user, 1)).to eq false
     end
   end
