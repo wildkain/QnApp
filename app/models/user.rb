@@ -8,6 +8,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:vkontakte, :twitter]
   has_many :authorizations
   has_many :questions, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
   has_many :answers, dependent: :destroy
   has_many :comments
 
