@@ -10,6 +10,12 @@
           - if can?(:destroy, @question)
             = link_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: "Are you sure?"},
                     class: 'btn btn-danger'
+          .subscriptions
+            - if current_user.subscribed?(@question)
+              = render 'subscriptions/unsubscribe', subscription: @subscription
+            - else
+              = render 'subscriptions/subscribe'
+
 
     .card-body
       .row

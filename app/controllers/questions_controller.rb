@@ -13,6 +13,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @subscription = current_user.subscriptions.where(question: @question)&.first
     respond_with(@question)
   end
 

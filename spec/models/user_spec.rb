@@ -105,4 +105,14 @@ RSpec.describe User, type: :model do
     end
 
   end
+
+  describe '#subscribed?' do
+    let(:user) { create :user }
+    let(:question) { create :question }
+    let(:subscription) { create(:subscription, user: user, question: question)}
+
+    it 'should be return true if user subscribed for question' do
+      expect(user.subscribed?(question)).to eq true
+    end
+  end
 end

@@ -45,4 +45,8 @@ class User < ApplicationRecord
   def create_authorization(auth)
     self.authorizations.create(provider: auth.provider, uid: auth.uid.to_s)
   end
+
+  def subscribed?(question)
+     !Subscription.where(user: self, question: question).empty?
+  end
 end
