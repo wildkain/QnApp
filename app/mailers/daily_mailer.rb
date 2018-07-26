@@ -1,7 +1,7 @@
 class DailyMailer < ApplicationMailer
 
   def digest(user)
-    @greeting = "Hi"
+    @questions = Question.where('created_at > ?', 1.day.ago)
 
     mail to: user.email
   end
