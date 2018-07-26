@@ -11,6 +11,15 @@ RSpec.describe Question, type: :model do
 
   let(:user) {create :user}
   let(:another_user) { create :user }
+  let(:question) { create(:question, user: user)}
   let(:object) { create :question }
+
   it_behaves_like "Votable Model"
+
+  describe "#subscribe_author!" do
+    it 'subscribe author to new question after create' do
+      expect(question.subscriptions.count).to eq 1
+      expect(question.subscriptions.first.user_id).to eq question.user_id
+    end
+  end
 end

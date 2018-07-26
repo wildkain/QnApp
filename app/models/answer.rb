@@ -11,11 +11,19 @@ class Answer < ApplicationRecord
 
   scope :best_ordered, -> { order(best: :desc) }
 
+  after_create :notify
+
   def best!
     transaction do
       question.answers.update_all(best: false)
       update!(best: true)
     end
+  end
+
+
+
+  def notify
+    NotifySubscribersJob.perform_later(self)
   end
 
 end

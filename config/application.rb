@@ -20,6 +20,7 @@ module QnApp
     # the framework and any gems in your application.
     #
     config.active_job.queue_adapter = :sidekiq
+
     config.generators do |g|
       g.test_framework :rspec,
                        fixtures: true,

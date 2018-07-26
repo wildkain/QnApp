@@ -7,6 +7,7 @@ class AnswersController < ApplicationController
   before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i[destroy update best]
   after_action :publish_answer, only: :create
+
   respond_to :js
 
   authorize_resource

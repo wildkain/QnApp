@@ -5,6 +5,7 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: %i[show edit update destroy]
   after_action :publish_question, only: :create
   before_action :build_answer, only: :show
+
   respond_to :html
   respond_to :js, only: :update
   authorize_resource
