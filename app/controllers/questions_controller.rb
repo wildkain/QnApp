@@ -5,16 +5,17 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: %i[show edit update destroy]
   after_action :publish_question, only: :create
   before_action :build_answer, only: :show
+  before_action :load_subscription, only: %i[show update]
 
   respond_to :html
   respond_to :js, only: :update
   authorize_resource
+
   def index
     respond_with(@questions = Question.all.order(created_at: :desc))
   end
 
   def show
-    @subscription = current_user.subscriptions.where(question: @question).first if current_user
     respond_with(@question)
   end
 
@@ -29,7 +30,8 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if current_user.author?(@question)
+
+    @question.update(question_params)
     respond_with(@question)
   end
 
@@ -58,6 +60,10 @@ class QuestionsController < ApplicationController
   def load_question
     @question = Question.find(params[:id])
     gon.question_id = @question.id
+  end
+
+  def load_subscription
+    @subscription = current_user.subscriptions.where(question: @question).first if current_user
   end
 
   def question_params

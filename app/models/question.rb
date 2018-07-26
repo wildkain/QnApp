@@ -7,7 +7,7 @@ class Question < ApplicationRecord
   belongs_to :user
   has_many :answers, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
-  after_save :subscribe_author!
+  after_create :subscribe_author!
 
   validates :title, :body, presence: true
 

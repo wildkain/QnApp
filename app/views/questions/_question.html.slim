@@ -19,7 +19,8 @@
               - if current_user.subscribed?(@question)
                 = render 'subscriptions/unsubscribe', subscription: @subscription
               - else
-                = render 'subscriptions/subscribe'
+                - if can?(:create, Subscription)
+                  = render 'subscriptions/subscribe', question: @question
     .card-body
       .row
         .col-md-10
