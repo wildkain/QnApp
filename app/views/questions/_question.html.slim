@@ -14,11 +14,12 @@
 
       .row
         .col-md-2
-          .subscriptions
-            - if current_user.subscribed?(@question)
-              = render 'subscriptions/unsubscribe', subscription: @subscription
-            - else
-              = render 'subscriptions/subscribe'
+          - if can?(:destroy, Subscription)
+            .subscriptions
+              - if current_user.subscribed?(@question)
+                = render 'subscriptions/unsubscribe', subscription: @subscription
+              - else
+                = render 'subscriptions/subscribe'
     .card-body
       .row
         .col-md-10

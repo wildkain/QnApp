@@ -1,7 +1,5 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
-  get 'subscription/create'
-  get 'subscription/destroy'
   authenticate :user, lambda {|u| u.admin?} do
     mount Sidekiq::Web => '/sidekiq'
   end

@@ -1,4 +1,8 @@
 class SubscriptionsController < ApplicationController
+  before_action :authenticate_user!
+  authorize_resource
+  respond_to :js
+
   def create
     @subscription = current_user.subscriptions.create(question_id: params[:question_id] )
     respond_with(@subscription)

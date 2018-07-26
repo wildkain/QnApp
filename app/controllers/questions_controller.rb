@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @subscription = current_user.subscriptions.where(question: @question)&.first
+    @subscription = current_user.subscriptions.where(question: @question).first if current_user
     respond_with(@question)
   end
 
