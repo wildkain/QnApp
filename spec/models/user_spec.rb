@@ -2,8 +2,9 @@ require 'rails_helper'
 
 
 RSpec.describe User, type: :model do
-  it { should have_many(:questions).dependent(:destroy)  }
-  it { should have_many(:answers).dependent(:destroy)  }
+  it { should have_many(:questions).dependent(:destroy) }
+  it { should have_many(:answers).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
   it { should have_many(:comments) }
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
@@ -94,5 +95,31 @@ RSpec.describe User, type: :model do
       end
 
     end
+  end
+
+  describe '.send_daily_digest' do
+    let!(:user) { create(:user)}
+
+    it 'should send daily digest to all users' do
+      expect(DailyMailer).to receive(:digest).with(user).and_call_original
+      User.send_daily_digest
+    end
+
+  end
+
+  describe '#subscribed?' do
+    let(:user) { create :user }
+    let(:not_subscribed_user) { create :user}
+    let(:question) { create :question }
+    let!(:subscription) { create(:subscription, user: user, question: question)}
+
+    it 'should be return true if user subscribed for question' do
+      expect(user.subscribed?(question)).to eq true
+    end
+
+    it 'should return false if user has not subs' do
+      expect(not_subscribed_user.subscribed?(question)).to eq false
+    end
+
   end
 end

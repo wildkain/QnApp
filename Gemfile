@@ -54,6 +54,13 @@ gem 'active_model_serializers'
 gem 'oj'
 gem 'oj_mimic_json'
 
+#AsyncJobs
+gem 'sidekiq'
+gem 'sidetiq'
+gem 'whenever'
+gem 'sinatra', '>= 1.3.0', require: nil
+
+
 
 #UI
 gem 'slim'

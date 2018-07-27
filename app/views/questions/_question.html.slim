@@ -6,11 +6,21 @@
           h3 = @question.title unless @question.nil?
         .col-md-4
           - if can?(:update, @question)
-            = link_to 'Edit Question', '', class: "edit-question-link btn btn-primary", data: {question: @question.id}
+            = link_to 'Edit Question', '', class: "edit-question-link btn btn-primary btn-sm", data: {question: @question.id}
           - if can?(:destroy, @question)
             = link_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: "Are you sure?"},
-                    class: 'btn btn-danger'
+                    class: 'btn btn-danger btn-sm'
 
+
+      .row
+        .col-md-2
+          - if can?(:destroy, @subscription)
+            .subscriptions
+              - if current_user.subscribed?(@question)
+                = render 'subscriptions/unsubscribe', subscription: @subscription
+              - else
+                - if can?(:create, Subscription)
+                  = render 'subscriptions/subscribe', question: @question
     .card-body
       .row
         .col-md-10

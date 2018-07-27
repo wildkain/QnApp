@@ -31,6 +31,8 @@ RSpec.describe Ability, type: :model do
     let(:other_user_question_attachment) { create(:attachment, attachmentable: other_user_question)}
     let(:authored_answer_attachment) { create(:attachment, attachmentable: authored_answer)}
     let(:other_user_answer_attachment) { create(:attachment, attachmentable: other_user_answer)}
+    let(:subscription) { create(:subscription, user: user, question:question)}
+    let(:other_user_subscription) { create(:subscription, user: other_user, question: question)}
 
     it { should_not be_able_to :manage, :all}
     it { should be_able_to :read, :all }
@@ -71,6 +73,12 @@ RSpec.describe Ability, type: :model do
       it { should_not be_able_to :update, create(:comment, commentable: question, user: other_user), user: user }
       it { should be_able_to :destroy, authored_comment, user: user }
       it { should_not be_able_to :destroy, other_user_comment, user: user }
+    end
+
+    context 'Subscription' do
+      it { should be_able_to :create, Subscription }
+      it { should be_able_to :destroy, subscription }
+      it { should_not be_able_to :destroy, other_user_subscription }
     end
   end
 end

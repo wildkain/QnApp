@@ -1,0 +1,6 @@
+<h3>Daily digest of questions</h3>
+<p>New questions for last day:
+  = @questions.count
+  - @questions.find_each do |question|
+  = link_to question.title, question.body, question_url(question)
+</p>
