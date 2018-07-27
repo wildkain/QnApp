@@ -36,3 +36,8 @@ config/database.yml
 #secrets
 /config/secrets.yml
 /config/credentials.yml.enc
+
+#sphinx
+dump.rdb
+config/*.sphinx.conf
+db/sphinx
