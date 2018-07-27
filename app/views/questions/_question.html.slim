@@ -14,7 +14,7 @@
 
       .row
         .col-md-2
-          - if can?(:destroy, Subscription)
+          - if can?(:destroy, @subscription)
             .subscriptions
               - if current_user.subscribed?(@question)
                 = render 'subscriptions/unsubscribe', subscription: @subscription

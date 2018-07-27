@@ -42,11 +42,12 @@ class User < ApplicationRecord
       DailyMailer.digest(user).deliver_later
     end
   end
+
   def create_authorization(auth)
     self.authorizations.create(provider: auth.provider, uid: auth.uid.to_s)
   end
 
   def subscribed?(question)
-     !Subscription.where(user: self, question: question).empty?
+    subscriptions.where(question: question).exists?
   end
 end

@@ -109,11 +109,17 @@ RSpec.describe User, type: :model do
 
   describe '#subscribed?' do
     let(:user) { create :user }
+    let(:not_subscribed_user) { create :user}
     let(:question) { create :question }
-    let(:subscription) { create(:subscription, user: user, question: question)}
+    let!(:subscription) { create(:subscription, user: user, question: question)}
 
     it 'should be return true if user subscribed for question' do
       expect(user.subscribed?(question)).to eq true
     end
+
+    it 'should return false if user has not subs' do
+      expect(not_subscribed_user.subscribed?(question)).to eq false
+    end
+
   end
 end
