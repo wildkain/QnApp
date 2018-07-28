@@ -1,0 +1,7 @@
+.row
+  .col-md-10
+    p = form_tag("/search", method: "get") do
+      = label_tag :query, ""
+      = text_field_tag :query, params[:query]
+      = select_tag(:resource, options_for_select(["Question", "Answer", "Comment", "User"], params[:resource]), prompt: "All" )
+      = submit_tag "Search"

@@ -1,6 +1,6 @@
 h2 Search results:
 - if @results.empty?
   p No results
--else
+- else
   - @results.each do |resource|
-    = render :partial => "search/question", locals: { resource: resource }
+    = render :partial => "search/#{resource.class.name.downcase}", locals: { resource: resource }

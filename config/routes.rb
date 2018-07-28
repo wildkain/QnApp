@@ -1,6 +1,6 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
-
+  get :search, to: 'search#index'
 
   authenticate :user, lambda {|u| u.admin?} do
     mount Sidekiq::Web => '/sidekiq'
@@ -50,6 +50,6 @@ Rails.application.routes.draw do
   resources :subscriptions, only: [:create, :destroy]
   resources :attachments, only: :destroy
 
-  get :search, to: 'search#index'
+
   mount ActionCable.server => '/cable'
 end
