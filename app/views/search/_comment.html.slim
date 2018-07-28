@@ -1,0 +1,16 @@
+- if resource.commentable_type == "Question"
+  .card.bg-default
+    .h5.card-header
+      = link_to resource.commentable.title, question_path(resource.commentable)
+    .card-body
+      p.card-text
+        = resource.body
+- else
+  .card.bg-default
+    .h5.card-header
+      = link_to resource.commentable.question.title,
+              question_path(resource.commentable.question,
+              anchor: "comment_#{resource.id}_for_answer_#{resource.commentable.id}")
+    .card-body
+      p.card-text
+        = resource.body

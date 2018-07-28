@@ -60,7 +60,9 @@ gem 'sidetiq'
 gem 'whenever'
 gem 'sinatra', '>= 1.3.0', require: nil
 
-
+#FulltextSearch
+gem 'mysql2'
+gem 'thinking-sphinx'
 
 #UI
 gem 'slim'

@@ -1,0 +1,6 @@
+.card.bg-default
+  .h5.card-header
+    = link_to "#{resource.title}", question_path(resource)
+  .card-body
+    p.card-text
+      = resource.body
