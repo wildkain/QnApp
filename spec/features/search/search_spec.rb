@@ -10,7 +10,7 @@ feature 'Search through resources' do
     scenario "#{resource} search", js: true, sphinx: true do
       visit root_path
       click_button 'Search'
-      save_and_open_page
+
       expect(page).to have_content resource.body
       end
   end
@@ -20,7 +20,6 @@ feature 'Search through resources' do
     fill_in "query", with: user.email
     click_button 'Search'
 
-    save_and_open_page
     expect(page).to have_content user.email
   end
 end
