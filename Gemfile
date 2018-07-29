@@ -31,6 +31,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv'
+gem 'therubyracer'
 #Attachments
 gem 'carrierwave'
 gem 'remotipart'
