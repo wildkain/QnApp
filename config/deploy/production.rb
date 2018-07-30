@@ -24,7 +24,6 @@ set :rails_env, "production"
 set :stage, :production
 
 set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
-end
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb
