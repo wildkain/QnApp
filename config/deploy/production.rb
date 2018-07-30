@@ -20,9 +20,10 @@ role :app, %w{deployer@95.213.195.18}
 role :web, %w{deployer@95.213.195.18}
 role :db,  %w{deployer@95.213.195.18}
 
-set :rails_env, :production
+set :rails_env, "production"
 set :stage, :production
 
+set :sidekiq_config, -> { File.join(current_path, ‘config’, ‘sidekiq.yml’) }
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb
