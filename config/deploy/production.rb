@@ -23,7 +23,7 @@ role :db,  %w{deployer@95.213.195.18}
 set :rails_env, "production"
 set :stage, :production
 
-set :sidekiq_config, -> do  File.join(current_path, 'config', 'sidekiq.yml')
+set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
 end
 # Configuration
 # =============
