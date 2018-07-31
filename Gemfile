@@ -32,6 +32,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv'
 gem 'therubyracer'
+gem 'unicorn'
 #Attachments
 gem 'carrierwave'
 gem 'remotipart'
@@ -92,6 +93,7 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :test do
