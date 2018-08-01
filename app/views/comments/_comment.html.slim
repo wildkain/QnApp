@@ -2,7 +2,8 @@
   .comment id="comment_#{comment.id}_for_#{comment.commentable_type.downcase}_#{comment.commentable.id}"
     .row
       .col-md-10
-        = comment.body
+        - cache comment do
+          = comment.body
       .col-md-2
         - if current_user&.author?(comment)
           = link_to 'Delete Comment', comment_path(comment), method: :delete, remote: true, data: { confirm: "Are you sure?"},

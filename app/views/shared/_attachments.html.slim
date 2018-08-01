@@ -2,7 +2,8 @@
   p Attachments:
   ul
     - resource.attachments.each do |a|
-      li id="attachment-#{a.id}"
-        = link_to a.file.identifier, a.file.url
-        - if can?(:destroy, a)
-          = link_to 'Delete File', a, remote: true, method: :delete, data: { id: resource.id } if current_user&.author?(resource)
+      - cache a do
+        li id="attachment-#{a.id}"
+          = link_to a.file.identifier, a.file.url
+      - if can?(:destroy, a)
+        = link_to 'Delete File', a, remote: true, method: :delete, data: { id: resource.id } if current_user&.author?(resource)
