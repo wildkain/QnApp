@@ -4,6 +4,6 @@
   <p>
   <% @questions.find_each do |question| %>
     <%= link_to question.title, question.body, question_url(question) %>
-    <% end %>
+    <% end  %>
   </p>
 </p>
