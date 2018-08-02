@@ -33,6 +33,10 @@ gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv'
 gem 'therubyracer'
 gem 'unicorn'
+
+#Caching
+gem 'redis-rails'
+
 #Attachments
 gem 'carrierwave'
 gem 'remotipart'
