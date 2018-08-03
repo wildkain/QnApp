@@ -23,7 +23,7 @@
                 = render 'subscriptions/subscribe', question: @question
     .card-body
       .row
-        .col-md-10
+        .col-md-11.question-body
           h5 = @question.body
           = render 'shared/attachments', resource: @question unless @question.attachments.empty?
           .edit-question-form
@@ -37,7 +37,7 @@
               .form-group
                 = form.submit 'Save', class: 'btn btn-primary'
 
-        .col-md-2
+        .col-md-1
           .vote_counter
             = @question.votes_sum
           .vote_links
