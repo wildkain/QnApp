@@ -1,7 +1,10 @@
-.row
-  .col-md-10
-    p = form_tag("/search", method: "get") do
+.row.
+  .col-md-12.text-right.mt-2
+    .search-form.form-inline.float-right
+      = form_tag("/search", method: "get", class: "form-inline") do
       = label_tag :query, ""
-      = text_field_tag :query, params[:query]
-      = select_tag(:resource, options_for_select(["Question", "Answer", "Comment", "User"], params[:resource]), prompt: "All" )
-      = submit_tag "Search"
+      .div class="input-group mb-2 mr-sm-2 mb-sm-0"
+        = text_field_tag :query, params[:query], class: 'form-control', placeholder:"Search..."
+
+      = select_tag(:resource, options_for_select(["Question", "Answer", "Comment", "User"], params[:resource]), prompt: "All", class: "custom-select mb-2 mr-sm-2 mb-sm-0" )
+      = submit_tag "Search", class: "btn btn-info"
