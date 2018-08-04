@@ -1,3 +1,4 @@
+
 .row.answer-block id="answer-#{answer.id}"
   .col-md-1.mt-4
     .vote_counter
@@ -38,3 +39,5 @@
 
       p Comments
       = render answer.comments
+  .answer-info-block.ml-2
+    p Answered by:  #{answer.user.fullname} at #{answer.created_at.to_formatted_s(:short) }
