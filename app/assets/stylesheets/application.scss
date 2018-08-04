@@ -2,6 +2,10 @@
 @import "answers";
 @import "comments";
 @import "questions";
+body {
+  background-color: #f1f1f1;
+}
+
 .edit_answer { display: none}
 .edit-question-form {
   display: none;

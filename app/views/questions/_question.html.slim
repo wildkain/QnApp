@@ -2,15 +2,16 @@
   .card.bg-default
     .card-header
       .row
-        .col-md-8
+        .col-md-10
           - cache @question do
             h3 = @question.title unless @question.nil?
-        .col-md-4
-          - if can?(:update, @question)
-            = link_to 'Edit Question', '', class: "edit-question-link btn btn-primary btn-sm", data: {question: @question.id}
-          - if can?(:destroy, @question)
-            = link_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: "Are you sure?"},
-                    class: 'btn btn-danger btn-sm'
+        .col-md-1
+          .btn-group-vertical
+            - if can?(:update, @question)
+              = link_to 'Edit Question', '', class: "edit-question-link btn btn-outline-primary btn-sm", data: {question: @question.id}
+            - if can?(:destroy, @question)
+              = link_to 'Delete Question', question_path(@question), method: :delete, data: {confirm: "Are you sure?"},
+                      class: 'btn btn-outline-danger btn-sm'
 
 
       .row
