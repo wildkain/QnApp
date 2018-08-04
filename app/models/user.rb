@@ -50,4 +50,9 @@ class User < ApplicationRecord
   def subscribed?(question)
     subscriptions.where(question: question).exists?
   end
+
+  def fullname
+    return "Nobody" unless first_name.present?
+    first_name+' '+last_name
+  end
 end

@@ -2,6 +2,10 @@
   .card.bg-default
     .card-header
       .row
+        .col-md-4
+          .question-info-block
+            | Created by: #{@question.user.fullname} at #{@question.created_at.to_formatted_s(:short)}
+      .row
         .col-md-10
           - cache @question do
             h3 = @question.title unless @question.nil?
