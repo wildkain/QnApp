@@ -12,7 +12,7 @@ class QuestionsController < ApplicationController
   authorize_resource
 
   def index
-    respond_with(@questions = Question.all.order(created_at: :desc))
+    @questions = Question.paginate(page: params[:page], per_page: 10).order('created_at DESC')
   end
 
   def show
