@@ -3,14 +3,17 @@
     p= link_to 'Ask question', new_question_path, class: 'btn btn-primary'
 .questions-list
   - unless @questions.empty?
-    - cache collection_cache_key_for :question do
-      - @questions.each do |question|
-        .question id="question_#{question.id}"
-          .card.bg-default
-            .h5.card-header
-              = link_to "#{question.title}", question_path(question)
-            .card-body
-              p.card-text
-                = question.body
+
+    - @questions.each do |question|
+      .row
+        .col-md-12
+          .question.mt-4 id="question_#{question.id}"
+            .card.bg-default
+              .h5.card-header
+                = link_to "#{question.title}", question_path(question)
+              .card-body
+                p.card-text
+                  = question.body.truncate(250)
+  = will_paginate @questions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
 
 

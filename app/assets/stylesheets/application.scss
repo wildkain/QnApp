@@ -1,8 +1,37 @@
 @import "bootstrap";
 @import "answers";
 @import "comments";
+@import "questions";
+body {
+  background-color: #f1f1f1;
+}
+
 .edit_answer { display: none}
 .edit-question-form {
   display: none;
 
+}
+
+.vote_up_link {
+
+  //text-indent:30px;
+  display:block;
+  cursor: pointer;
+}
+
+.vote_down_link {
+
+  //text-indent:30px;
+  display:block;
+  cursor: pointer;
+}
+
+.vote_counter {
+  text-align: center;
+  font-size: x-large;
+  border: 1px solid deepskyblue;
+}
+
+.vote {
+  text-align: center;
 }

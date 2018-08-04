@@ -70,6 +70,9 @@ gem 'slim'
 gem 'jquery-rails'
 gem 'bootstrap'
 gem 'octicons_helper'
+gem 'will_paginate', '>= 3.1'
+gem 'will_paginate-bootstrap4'
+
 
 gem 'skim'
 gem 'gon'

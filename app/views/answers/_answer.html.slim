@@ -1,5 +1,5 @@
 .row.answer-block id="answer-#{answer.id}"
-  .col-md-2.mt-4
+  .col-md-1.mt-4
     .vote_counter
       = answer.votes_sum
     .vote_links
@@ -11,12 +11,13 @@
     = render 'shared/attachments', resource: answer unless answer.attachments.empty?
 
   .col-md-2.mt-4 id="actions"
-    - if answer.persisted? && can?(:best, answer)
-      = link_to 'Best Answer', best_answer_path(answer), class: 'btn btn-success btn-sm',  remote: true, method: :patch
-    - if can?(:update, answer) && answer.persisted?
-      = link_to 'Edit Answer', '', class: 'edit-answer-link btn btn-primary btn-sm', data: { answer_id: answer.id }
-    - if can?(:destroy, answer) && answer.persisted?
-      = link_to 'Delete Answer', answer, remote: true, method: :delete, class: 'delete-answer-link btn btn-danger btn-sm', data: { answer_id: answer.id }
+    .btn-group-vertical
+      - if answer.persisted? && can?(:best, answer)
+        = link_to 'Best Answer', best_answer_path(answer), class: 'btn btn-outline-success btn-sm',  remote: true, method: :patch
+      - if can?(:update, answer) && answer.persisted?
+        = link_to 'Edit Answer', '', class: 'edit-answer-link btn btn-outline-secondary btn-sm', data: { answer_id: answer.id }
+      - if can?(:destroy, answer) && answer.persisted?
+        = link_to 'Delete Answer', answer, remote: true, method: :delete, class: 'delete-answer-link btn btn-outline-danger btn-sm', data: { answer_id: answer.id }
 
 
   div id="update-answer-form"

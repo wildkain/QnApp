@@ -3,7 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .edit_answer { display: none}
 .answer-block {
-
+  margin-left: 20px;
+  border-top: 2px solid gainsboro;
+  background-color: #ffff;
 }
 
 .best-answer {
@@ -18,4 +20,16 @@
 
 .vote_error {
   color: red;
+}
+
+.form-block {
+  padding: 15px;
+}
+
+.form-title {
+  color: #072dc5;
+}
+
+.answer-block-form {
+  margin-top: 100px;
 }

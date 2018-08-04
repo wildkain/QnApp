@@ -8,8 +8,9 @@ feature 'User can vote for answer', %q{
 } do
 
   given(:user) { create :user }
-  given!(:question) { create :question }
-  given!(:answer) { create(:answer, question: question)}
+  given(:another_user) { create :user }
+  given!(:question) { create :question  }
+  given!(:answer) { create(:answer, question: question, user: another_user)}
 
   context  'Authenticated user' do
     before do
@@ -17,9 +18,8 @@ feature 'User can vote for answer', %q{
       visit question_path(question)
     end
     scenario 'Authenticated user vote UP to answer', js:true do
-      within '.answers' do
-        click_link 'Vote Up'
-      end
+        save_and_open_page
+        click_on(class: 'vote_up_link')
       sleep(1)
       answer.reload
       expect(answer.votes_sum).to eq 1
