@@ -1,24 +1,44 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+**This is one of many clones Stackoverflow =)**
 
-Things you may want to cover:
+**Entities**
+* User
+* Question
+* Answer
+* Comment
+* Vote
+* Attachement
+* Subscription
 
-* Ruby version
+**Roles** 
 
-* System dependencies
+Admin - can all)
+User  - can manage only own objects(Question, Answer, ... etc)
 
-* Configuration
+**API** 
 
-* Database creation
+First of all, for interact with API, you must do POST request to special endpoint:
 
-* Database initialization
+**POST "/oauth/token"**
 
-* How to run the test suite
+    Headers:
+      Content-Type: application/x-www-form-urlencoded   
+    Body: 
+      * client_id: "application_id from doorkeeper"
+      * client_secret: "secret from doorkeeper"
+      * code: "authorization code from doorkeeper"
+      * grant_type: authorization_code
+      * redirect_uri: "on localhost it is 'urn:ietf:wg:oauth:2.0:oob'"	
 
-* Services (job queues, cache servers, search engines, etc.)
+    Response:
+      Body: 
+        {
+            "access_token": "b71dc220f7fda884db31771c2b41ca736dd0cbe6fd594695c07bf1a17c538ed5",
+            "token_type": "bearer",
+            "expires_in": 7200,
+            "created_at": 1547643200
+        }
+Then, you must use the access token from response in each your requests.
+   
 
-* Deployment instructions
-
-* ...
