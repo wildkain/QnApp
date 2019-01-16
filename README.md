@@ -29,7 +29,7 @@ For details, see the gem documentation. https://github.com/pat/thinking-sphinx
     
 **User roles**
 * Admin - can manage all.
-* User - can manage only own resources.   
+* User  - can manage only own objects(Question, Answer, ... etc) 
 
 **Entities**
 * User
@@ -40,14 +40,13 @@ For details, see the gem documentation. https://github.com/pat/thinking-sphinx
 * Attachement
 * Subscription
 
-**Roles** 
 
-Admin - can all)
-User  - can manage only own objects(Question, Answer, ... etc)
 
 #### **API**
 
 First of all, for interact with API, you must do POST request to special endpoint:
+
+**Endpoints**
 
 **POST "/oauth/token"**
 
